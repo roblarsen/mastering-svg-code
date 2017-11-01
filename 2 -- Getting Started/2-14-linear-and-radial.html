@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-<!-- saved from url=(0117)file:///C:/Users/RLARSEN/Documents/GitHub/mastering-svg-code/2%20-%2D%20Getting%20Started/2-14-linear-and-radial.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
             <title>Mastering SVG- Using SVG images in CSS</title>
             <style type="text/css">
             </style>
         </head>
         <body>
-          <svg width="400" height="700" viewBox="0 0 400 700" xmlns="http://www.w3.org/2000/svg">
+          <svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <lineargradient id="linear">
-                  <stop stop-color="purple" offset="0"></stop>
-                  <stop stop-color="blue" offset="25.2% "></stop>
-                  <stop stop-color="green" offset="37.8% "></stop>
-                  <stop stop-color="yellow" offset="55.8% "></stop>
-                  <stop stop-color="orange" offset="60.3% "></stop>
-                  <stop stop-color="red" offset="100%"></stop>
-              </lineargradient>
-              <radialgradient id="radial">
-
-                  <stop stop-color="red" offset="0%"></stop><stop stop-color="orange" offset="39.7% "></stop><stop stop-color="yellow" offset="44.2% "></stop>
-                  <stop stop-color="green" offset="62.2% "></stop> <stop stop-color="blue" offset="74.8% "></stop><stop stop-color="purple" offset="100%"></stop>
-
-              </radialgradient>
-            </defs>
-            <rect x="25" y="25" width="300" height="300" fill="url(#radial)"></rect>
-            <rect x="25" y="350" width="300" height="50" fill="url(#linear)"></rect>
+              <linearGradient id="linear">
+                  <stop offset="5%"  stop-color="green"/>
+                  <stop offset="95%" stop-color="gold"/>
+              </linearGradient>
+                <radialGradient id="radial">
+                  <stop offset="10%" stop-color="gold"/>
+                  <stop offset="95%" stop-color="green"/>
+                </radialGradient>
+              
+          </defs>
+            <rect x="50" y="20" width="100" height="100" fill="url(#radial)"
+            ></rect>
+            <rect x="50" y="140" width="100" height="100" fill="url(#linear)"></rect>
         </svg>
     </body></html>
