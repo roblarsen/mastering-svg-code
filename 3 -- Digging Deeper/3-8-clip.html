@@ -5,29 +5,18 @@
         <title>Mastering SVG- Positioning in SVG</title>
         <style type="text/css">
           svg {
-            background: black;
+            border:1px solid black;
           }
         </style>
     </head>
     <body>
       <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0  240 240" version="1.1">
         <defs>
-          <linearGradient id="gradient">
-            <stop offset=".5" stop-color="white" stop-opacity="0" />
-            <stop offset="1" stop-color="white" stop-opacity="1" />
-          </linearGradient>
-          <mask id="polka-dots" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
-            <rect y="0" x="0" width="80" height="240" fill="url(#gradient)"></rect>
-            <rect y="0" x="60" width="80" height="240" fill="url(#gradient)"></rect>
-            <rect y="0" x="120" width="80" height="240" fill="url(#gradient)"></rect>
-            <rect y="0" x="180" width="80" height="240" fill="url(#gradient)"></rect>
-          </mask>
-          <text id="big-r" x="125" y="250" font-size="400" font-weight="900" text-anchor="middle">
-            R
-          </text>
+          <clipPath id="star" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+            <polygon points="95,95 120,5 150,95 235,95 165,150 195,235 120,180 50,235 75,150 5,95" fill="white"></polygon>
+          </clipPath>
         </defs>
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#big-r" fill="red"></use>
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#big-r" fill="black" mask="url(#polka-dots)"></use>
+        <circle fill="black" mask="url(#star)" cy="120" cx="120" r="120"></circle>
       </svg>
     </body>
 </html>
