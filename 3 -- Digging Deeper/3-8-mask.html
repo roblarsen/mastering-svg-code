@@ -10,27 +10,29 @@
         </style>
     </head>
     <body>
-      <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0  500 500" version="1.1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0  240 240" version="1.1">
         <defs>
-          <mask id="masking" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="200">
-            <circle cx="120" cy="0" r="250" fill="white"></circle>
+          <mask id="polka-dots" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+          <circle fill="white" cx="49" cy="113" r="39"></circle>
+          <circle fill="white" cx="124" cy="174" r="22"></circle>
+          <circle fill="white" cx="25" cy="25" r="22"></circle>
+          <circle fill="white" cx="151" cy="208" r="22"></circle>
+          <circle fill="white" cx="161" cy="97" r="12"></circle>
+          <circle fill="white" cx="150" cy="57" r="30"></circle>
+          <circle fill="white" cx="63" cy="267" r="57"></circle>
+          <circle fill="white" cx="68" cy="180" r="7"></circle>
+          <circle fill="white" cx="112" cy="136" r="10"></circle>
+          <circle fill="white" cx="117" cy="85" r="25"></circle>
+          <circle fill="white" cx="198" cy="241" r="8"></circle>
+          <circle fill="white" cx="236" cy="287" r="29"></circle>
           </mask>
-          <text id="Texttwo" x="0" y="77" font-size="80" font-weight="bold" text-anchor="left">
-        Masking for
-      </text>
-      <text id="Texttwo" x="0" y="150" font-size="80" font-weight="bold" text-anchor="left">
-        Fun and Profit
-      </text>
+          <text id="big-r" x="115" y="230" font-size="320" font-weight="bold" text-anchor="middle">
+            R
+          </text>
         </defs>
-        
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Text" fill="red"></use>
-        
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Text" fill="black" mask="url(#masking)"></use>
-      
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Texttwo" fill="red"></use>
-      
-    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Texttwo" fill="black" mask="url(#masking)"></use>
-  </svg>
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#big-r" fill="red"></use>
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#big-r" fill="black" mask="url(#polka-dots)"></use>
+      </svg>
     </body>
 </html>
 
