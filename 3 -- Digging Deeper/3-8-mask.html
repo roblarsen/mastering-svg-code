@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Mastering SVG- Positioning in SVG</title>
+        <style type="text/css">
+          svg {
+            border: 1px solid black;
+          }
+        </style>
+    </head>
+    <body>
+      <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0  500 500" version="1.1">
+        <defs>
+          <mask id="masking" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="200">
+            <circle cx="120" cy="0" r="250" fill="white"></circle>
+          </mask>
+          <text id="Texttwo" x="0" y="77" font-size="80" font-weight="bold" text-anchor="left">
+        Masking for
+      </text>
+      <text id="Texttwo" x="0" y="150" font-size="80" font-weight="bold" text-anchor="left">
+        Fun and Profit
+      </text>
+        </defs>
+        
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Text" fill="red"></use>
+        
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Text" fill="black" mask="url(#masking)"></use>
+      
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Texttwo" fill="red"></use>
+      
+    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Texttwo" fill="black" mask="url(#masking)"></use>
+  </svg>
+    </body>
+</html>
+
