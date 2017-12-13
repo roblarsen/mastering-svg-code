@@ -12,15 +12,13 @@
     <body>
       <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0  240 240" version="1.1">
         <defs>
-          <linearGradient id="gradient">
+          <radialGradient id="gradient">
             <stop offset=".5" stop-color="white" stop-opacity="0" />
+            <stop offset=".75" stop-color="white" stop-opacity=".25" />
             <stop offset="1" stop-color="white" stop-opacity="1" />
-          </linearGradient>
+          </radialGradient>
           <mask id="polka-dots" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
-            <rect y="0" x="0" width="80" height="240" fill="url(#gradient)"></rect>
-            <rect y="0" x="60" width="80" height="240" fill="url(#gradient)"></rect>
-            <rect y="0" x="120" width="80" height="240" fill="url(#gradient)"></rect>
-            <rect y="0" x="180" width="80" height="240" fill="url(#gradient)"></rect>
+            <rect y="0" x="0" width="240" height="240" stroke="none" fill="url(#gradient)" transform="translate(-80,-80) scale(1.35)"></rect>
           </mask>
           <text id="big-r" x="125" y="250" font-size="400" font-weight="900" text-anchor="middle">
             R
