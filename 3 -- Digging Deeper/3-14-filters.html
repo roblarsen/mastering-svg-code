@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Mastering SVG- Positioning SVG Elements</title>
+        <style type="text/css">
+          svg {
+            border: 1px solid black;
+          }
+        </style>
+    </head>
+    <body>
+        <svg xmlns="http://www.w3.org/2000/svg" width="400" height="150" viewBox="0 0 400 150" version="1.1">
+          <filter id="blur">
+            <feGaussianBlur in="SourceImage" stdDeviation="5"></feGaussianBlur>
+           </filter>
+         <filter id="multiple">
+            <feTurbulence type="turbulence" in="SourceImage" baseFrequency=".05" numOctaves="8" result="turbulence"></feTurbulence> <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="50" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+            
+            <feGaussianBlur in="SourceImage" stdDeviation="5"></feGaussianBlur>
+            <feDropShadow dx="4" in="SourceImage" dy="8" stdDeviation="4"></feDropShadow>
+           </filter>
+          <circle cx="75" cy="75" r="50" fill="rgba(255,0,0,1)"></circle>
+          <circle cx="200" cy="75" r="50" fill="rgba(255,0,0,1)" filter="url(#blur)"></circle>
+          <circle cx="325" cy="75" r="50" fill="rgba(255,0,0,1)" filter="url(#multiple)"></circle>
+          
+        </svg>
+    </body>
+</html>
