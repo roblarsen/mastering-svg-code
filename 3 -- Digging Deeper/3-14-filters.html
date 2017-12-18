@@ -14,10 +14,10 @@
           <filter id="blur">
             <feGaussianBlur in="SourceImage" stdDeviation="5"></feGaussianBlur>
            </filter>
-         <filter id="multiple">
+         <filter id="multiple" height="200" width="200">
             <feTurbulence type="turbulence" in="SourceImage" baseFrequency=".05" numOctaves="8" result="turbulence"></feTurbulence> <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="50" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
             
-            <feGaussianBlur in="SourceImage" stdDeviation="5"></feGaussianBlur>
+            <feGaussianBlur in="SourceImage" stdDeviation="3"></feGaussianBlur>
             <feDropShadow dx="4" in="SourceImage" dy="8" stdDeviation="4"></feDropShadow>
            </filter>
           <circle cx="75" cy="75" r="50" fill="rgba(255,0,0,1)"></circle>
