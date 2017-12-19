@@ -1,29 +1,48 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Mastering SVG- Positioning SVG Elements</title>
-        <style type="text/css">
-          svg {
-            border: 1px solid black;
-          }
-        </style>
-    </head>
-    <body>
-        <svg xmlns="http://www.w3.org/2000/svg" width="400" height="150" viewBox="0 0 400 150" version="1.1">
-          <filter id="blur">
-            <feGaussianBlur in="SourceImage" stdDeviation="5"></feGaussianBlur>
-           </filter>
-         <filter id="multiple" height="200" width="200">
-            <feTurbulence type="turbulence" in="SourceImage" baseFrequency=".05" numOctaves="8" result="turbulence"></feTurbulence> <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="50" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-            
-            <feGaussianBlur in="SourceImage" stdDeviation="3"></feGaussianBlur>
-            <feDropShadow dx="4" in="SourceImage" dy="8" stdDeviation="4"></feDropShadow>
-           </filter>
-          <circle cx="75" cy="75" r="50" fill="rgba(255,0,0,1)"></circle>
-          <circle cx="200" cy="75" r="50" fill="rgba(255,0,0,1)" filter="url(#blur)"></circle>
-          <circle cx="325" cy="75" r="50" fill="rgba(255,0,0,1)" filter="url(#multiple)"></circle>
-          
-        </svg>
-    </body>
+
+<head>
+  <meta charset="utf-8">
+  <title>Mastering SVG- Positioning SVG Elements</title>
+  <style type="text/css">
+    svg {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <svg 
+  xmlns="http://www.w3.org/2000/svg" width="400" height="150" viewBox="0 0 400 150">
+    <filter id="blurIsm">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
+    </filter>
+    <filter id="multipleIsm" height="200" width="200">
+        <feDiffuseLighting in="SourceGraphic" result="light"
+        lighting-color="white">
+      <fePointLight x="150" y="60" z="20" />
+    </feDiffuseLighting>
+      <feGaussianBlur in="SourceGraphic" in2="light" result="blur" stdDeviation="3"/>
+      <feDropShadow dx="4" in="blur" dy="8" stdDeviation="4"></feDropShadow>
+    </filter>
+    <circle cx="75" cy="75" r="50" fill="red"/>
+    <circle cx="200" cy="75" r="50" fill="red" filter="url(#blurMe)"/>
+    <circle cx="325" cy="75" r="50" fill="red" filter="url(#multipleIsm)"/>
+
+  </svg>
+  <svg width="230" height="120"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+ 
+   <filter id="blurMe">
+     <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+   </filter>
+ 
+   <circle cx="60"  cy="60" r="50" fill="green" />
+ 
+   <circle cx="170" cy="60" r="50" fill="green"
+           filter="url(#blurMe)" />
+ </svg>
+</body>
+
 </html>
