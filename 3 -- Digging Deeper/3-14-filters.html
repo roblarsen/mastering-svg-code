@@ -13,36 +13,14 @@
 
 <body>
   <svg 
-  xmlns="http://www.w3.org/2000/svg" width="400" height="150" viewBox="0 0 400 150">
+  xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150">
     <filter id="blurIsm">
       <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
     </filter>
-    <filter id="multipleIsm" height="200" width="200">
-        <feDiffuseLighting in="SourceGraphic" result="light"
-        lighting-color="white">
-      <fePointLight x="150" y="60" z="20" />
-    </feDiffuseLighting>
-      <feGaussianBlur in="SourceGraphic" in2="light" result="blur" stdDeviation="3"/>
-      <feDropShadow dx="4" in="blur" dy="8" stdDeviation="4"></feDropShadow>
-    </filter>
     <circle cx="75" cy="75" r="50" fill="red"/>
-    <circle cx="200" cy="75" r="50" fill="red" filter="url(#blurMe)"/>
-    <circle cx="325" cy="75" r="50" fill="red" filter="url(#multipleIsm)"/>
-
+    <circle cx="200" cy="75" r="50" fill="red" filter="url(#blurIsm)"/>
+   
   </svg>
-  <svg width="230" height="120"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
- 
-   <filter id="blurMe">
-     <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
-   </filter>
- 
-   <circle cx="60"  cy="60" r="50" fill="green" />
- 
-   <circle cx="170" cy="60" r="50" fill="green"
-           filter="url(#blurMe)" />
- </svg>
 </body>
 
 </html>
