@@ -1,2 +1,3 @@
-# mastering-svg-code
-Code and miscellany for my book Mastering SVG
+## Welcome to GitHub Pages
+
+Markup examples for my new book Mastering SVG!
