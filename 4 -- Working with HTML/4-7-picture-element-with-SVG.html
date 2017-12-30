@@ -2,18 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Mastering SVG- picture element </title>
+  <title>Mastering SVG- picture element with SVG </title>
 </head>
 <body>
   <picture>
     <source 
       media="(min-width: 1024px)"
-      sizes="50vw" 
       srcset="more-colors.svg">
     <img 
-      src="more-colors-square.svg.jpg" 
-      sizes="(min-width: 768px) 60vw, 100vw"
-      srcset="more-colors-square.svg">
+      src="more-colors-square.svg" 
+      srcset="more-colors-square.svg"
+      width="100%">
   </picture>
 	</body>
 </html>
