@@ -1,0 +1,14 @@
+ <svg xmlns="http://www.w3.org/2000/svg" role="img" width="400" height="400" viewBox="0 0 400 400">
+  <text x="25" y="50" >
+    CSS Font Properties
+  </text>
+  <text x="25" y="150" class="text">
+    CSS Font Properties
+  </text>
+  <text x="25" y="200" class="text text-italic">
+    CSS Font Properties
+  </text>
+  <text x="25" y="250" class="text text-bold">
+    CSS Font Properties
+  </text>
+ </svg>
