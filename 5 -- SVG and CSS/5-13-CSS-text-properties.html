@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mastering SVG- SVG-specific CSS Text Properties</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400" rel="stylesheet">
+
+    <style type="text/css">
+     .text {
+            font-family: Raleway, sans-serif;
+            font-size: 1.5em;
+          }
+     .hanging {
+         alignment-baseline: hanging;
+     }
+     .middle {
+         alignment-baseline: middle;
+     }
+     .baseline {
+         alignment-baseline: baseline;
+     }
+     .sub {
+        baseline-shift: sub;
+    }
+    .super {
+        baseline-shift: super;
+    }
+    .text-anchor-start{
+        text-anchor:start;
+    }
+    .text-anchor-middle{
+        text-anchor:middle;
+    }
+    .text-anchor-end{
+        text-anchor:end;
+    }
+    </style>
+</head>
+
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+        <rect width="400" height="25" x="0" y="0" fill="#cccccc" />
+        <rect width="400" height="25" x="0" y="25" fill="#efefef" />
+        <rect width="400" height="25" x="0" y="50"  fill="#cccccc"/>
+        <rect width="400" height="25" x="0" y="75" fill="#efefef"/>
+        <rect width="400" height="25" x="0" y="100"  fill="#cccccc"/>
+        <rect width="400" height="25" x="0" y="125" fill="#efefef"/>
+        <rect width="400" height="25" x="0" y="150"  fill="#cccccc"/>
+        <rect width="400" height="25" x="0" y="175" fill="#efefef"/>
+        <rect width="400" height="25" x="0" y="200"  fill="#cccccc"/>
+        <rect width="400" height="25" x="0" y="225" fill="#efefef"/>
+        <rect width="400" height="25" x="0" y="250"  fill="#cccccc"/>
+        <rect width="400" height="25" x="0" y="275" fill="#efefef"/>
+        <rect width="400" height="25" x="0" y="300"  fill="#cccccc"/>
+        <rect width="400" height="25" x="0" y="325" fill="#efefef"/>
+        <rect width="400" height="25" x="0" y="350"  fill="#cccccc"/>
+        <rect width="400" height="25" x="0" y="375" fill="#efefef"/>
+
+ 
+        <line x1="200" y1="250" x2=
+        "200" y2="275" stroke="red"></line>
+        <line x1="200" y1="300" x2=
+        "200" y2="325" stroke="red"></line>
+        <line x1="200" y1="350" x2=
+        "200" y2="375" stroke="red"></line>
+        <text class="text hanging" x="50" y="25">Hanging</text>
+
+        <text class="text middle" x="50" y="75">Middle</text>
+
+        <text class="text baseline" x="50" y="125">Baseline</text>
+        <text class="text baseline" x="50" y="175">Super<tspan class="super">sup</tspan></text>
+        <text class="text baseline" x="50" y="225">Sub<tspan class="sub">sub</tspan></text>
+        <text class="text text-anchor-start" x="200" y="275">Text Anchor Start</text>
+
+        <text class="text text-anchor-middle" x="200" y="325">Text Anchor Middle</text>
+
+        <text class="text text-anchor-end" x="200" y="375">Text Anchor End </text>
+        
+    </svg>
+</body>
+
+</html>
