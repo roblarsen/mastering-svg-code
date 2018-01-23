@@ -17,17 +17,11 @@
      .dominant-middle {
          dominant-baseline: middle;
      }
-     .dominant-baseline {
-         dominant-baseline: baseline;
-     }
      .alignment-hanging {
          alignment-baseline: hanging;
      }
      .alignment-middle {
          alignment-baseline: middle;
-     }
-     .alignment-baseline {
-         alignment-baseline: baseline;
      }
      .sub {
         baseline-shift: sub;
@@ -67,37 +61,24 @@
         <rect width="400" height="25" x="0" y="375" fill="#efefef"/>
         <rect width="400" height="25" x="0" y="400"  fill="#cccccc"/>
         <rect width="400" height="25" x="0" y="425" fill="#efefef"/>
-        <rect width="400" height="25" x="0" y="450"  fill="#cccccc"/>
-        <rect width="400" height="25" x="0" y="475" fill="#efefef"/>
-        <rect width="400" height="25" x="0" y="500"  fill="#cccccc"/>
-        <rect width="400" height="25" x="0" y="525" fill="#efefef"/>
  
+        <line x1="200" y1="300" x2=
+        "200" y2="325" stroke="red"></line>
+        <line x1="200" y1="350" x2=
+        "200" y2="375" stroke="red"></line>
         <line x1="200" y1="400" x2=
         "200" y2="425" stroke="red"></line>
-        <line x1="200" y1="450" x2=
-        "200" y2="475" stroke="red"></line>
-        <line x1="200" y1="500" x2=
-        "200" y2="525" stroke="red"></line>
-       
         <text class="text dominant-hanging" x="50" y="25">Hanging</text>
-
         <text class="text dominant-middle" x="50" y="75">Middle</text>
+        <text class="text" x="50" y="125">Text <tspan class="alignment-hanging">Hanging</tspan></text>
+        <text class="text" x="50" y="175">Text <tspan class="alignment-middle">Middle</tspan></text>
+        <text class="text" x="50" y="225">Super<tspan class="super">sup</tspan></text>
+        <text class="text" x="50" y="275">Sub<tspan class="sub">sub</tspan></text>
+        <text class="text text-anchor-start" x="200" y="325">Text Anchor Start</text>
 
-        <text class="text dominant-baseline" x="50" y="125">Baseline</text>
-        
-        <text class="text alignment-hanging" x="50" y="175">Hanging</text>
+        <text class="text text-anchor-middle" x="200" y="375">Text Anchor Middle</text>
 
-        <text class="text alignment-middle" x="50" y="225">Middle</text>
-
-        <text class="text alignment-baseline" x="50" y="275">Baseline</text>
-        
-        <text class="text baseline" x="50" y="325">Super<tspan class="super">sup</tspan></text>
-        <text class="text baseline" x="50" y="375">Sub<tspan class="sub">sub</tspan></text>
-        <text class="text text-anchor-start" x="200" y="425">Text Anchor Start</text>
-
-        <text class="text text-anchor-middle" x="200" y="475">Text Anchor Middle</text>
-
-        <text class="text text-anchor-end" x="200" y="525">Text Anchor End </text>
+        <text class="text text-anchor-end" x="200" y="425">Text Anchor End </text>
         
     </svg>
 </body>
