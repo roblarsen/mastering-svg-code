@@ -2,26 +2,82 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Mastering SVG- SVG Basic The DOM Manipulator</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style type="text/css">
-      svg {
-        border: 1px solid black;
-        width: 100%;
-      }
-    </style>
+  <meta charset="utf-8">
+  <title>Mastering SVG- SVG Basic The DOM Manipulator</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <style type="text/css">
+    svg.canvas {
+      border: 1px solid black;
+      width: 100%;
+    }
+
+    button svg {
+      fill: cornflowerblue;
+      stroke: cornflowerblue;
+      max-width: 50px;
+    }
+  </style>
 </head>
 
 <body>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" version="1.1">
-    </svg>
-    <script>
-   
-    </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" version="1.1" id="canvas">
+  </svg>
+  <div class="controls container-fluid">
+    <div class="row">
+      <div class="col-4 text-center">
+        <button class="btn btn-link" title="click to add a circle">
+
+          <svg xmlns="http://www.w3.org/2000/svg" role="img">
+            <use xlink:href="#circle"></use>
+          </svg>
+        </button>
+      </div>
+      <div class="col-4 text-center" title="click to add a square">
+        <button class="btn btn-link">
+
+          <svg xmlns="http://www.w3.org/2000/svg" role="img">
+            <use xlink:href="#square"></use>
+          </svg>
+        </button>
+      </div>
+      <div class="col-4 text-center">
+        <button class="btn btn-link" title="click to add a text box">
+
+          <svg xmlns="http://www.w3.org/2000/svg" role="img">
+            <use xlink:href="#text"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <defs>
+      <symbol id="circle" viewBox="0 0 512 512">
+        <circle cx="256" cy="256" r="256"></circle>
+      </symbol>
+      <symbol id="square" viewBox="0 0 512 512">
+        <rect x="6" y="6" height="500" width="500"></rect>
+      </symbol>
+      <symbol id="text" viewBox="0 0 512 512">
+        <rect x="6" y="106" height="300" width="500" fill="none" stroke-width="10px"></rect>
+        <text x="6" y="325" font-size="27vh">TEXT</text>
+      </symbol>
+    </defs>
+  </svg>
+  <script>
+
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
