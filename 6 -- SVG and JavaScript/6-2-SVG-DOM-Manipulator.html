@@ -15,11 +15,19 @@
     svg.canvas {
       border: 1px solid black;
     }
-
     svg.canvas.active {
-      border: 4px solid red;
+      border: 4px solid black;
+      cursor: crosshair;
     }
-
+    svg.canvas.active.square{
+      cursor:url(square.png), crosshair;
+    }
+    svg.canvas.active.circle{
+      cursor:url(circle.png), crosshair;
+    }
+    svg.canvas.active.text{
+      cursor:url(text.png), crosshair;
+    }
     button svg {
       fill: cornflowerblue;
       stroke: cornflowerblue;
@@ -47,7 +55,7 @@
       <div class="col-4 text-center">
         <button class="btn btn-link" title="click to add a circle">
           <svg xmlns="http://www.w3.org/2000/svg" role="img">
-            <use xlink:href="#circle"></use>
+            <use xlink:href="#circle" data-type="circle"></use>
           </svg>
         </button>
       </div>
@@ -55,14 +63,14 @@
         <button class="btn btn-link">
 
           <svg xmlns="http://www.w3.org/2000/svg" role="img">
-            <use xlink:href="#square"></use>
+            <use xlink:href="#square" data-type="square"></use>
           </svg>
         </button>
       </div>
       <div class="col-4 text-center">
         <button class="btn btn-link" title="click to add a text box">
           <svg xmlns="http://www.w3.org/2000/svg" role="img">
-            <use xlink:href="#text"></use>
+            <use xlink:href="#text" data-type="text"></use>
           </svg>
         </button>
       </div>
@@ -107,8 +115,19 @@
       let doc = document;
       let canvas = doc.getElementById("canvas");
       doc.querySelectorAll(".controls .btn").forEach((element) => {
-        element.addEventListener("click", () => {
-          canvas.classList.toggle("active");
+        element.addEventListener("click", (event) => {
+          let classlist = canvas.classList;
+          const type = event.srcElement.dataset.type;
+          if (classlist.contains("active",type)){
+            classlist.remove("active",type);
+          }
+          else if (classlist.contains("active")){
+            classlist.remove("circle","text","square");
+            classlist.add(type);
+          } else {
+            classlist.remove("circle","text","square");
+            classlist.add("active",type);
+          }
         });
       });
     });
