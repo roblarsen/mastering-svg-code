@@ -114,44 +114,46 @@
     crossorigin="anonymous"></script>
   <script>
     /*
-    ES5
+    ES6
     */
-    function add(event){
+    {
       const doc = document;
       const canvas = doc.getElementById("canvas");
-      const classes = canvas.classList;
-      let elem;
-      //https://www.sitepoint.com/how-to-translate-from-dom-to-svg-coordinates-and-back-again/
-      let point = canvas.createSVGPoint()
-      point.x = event.offsetX;
-      point.y= event.offsetY;
-      const svgCoords = point.matrixTransform(canvas.getScreenCTM().inverse());
-      const svgNS = "http://www.w3.org/2000/svg";
-      if (classes.contains("active")) {
-        if (classes.contains("square")){
-          elem = doc.createElementNS(svgNS, "rect");
-          elem.setAttribute("x",svgCoords.x);
-          elem.setAttribute("y",svgCoords.y);
-          elem.setAttribute("width",50);
-          elem.setAttribute("height",50);
-        } else if (classes.contains("circle")){
-          elem = doc.createElementNS(svgNS, "circle");
-          elem.setAttribute("r",10);
-          elem.setAttribute("cx",svgCoords.x);
-          elem.setAttribute("cy",svgCoords.y);
-        } else if (classes.contains("text")){
-          elem = doc.createElementNS(svgNS, "text");
-          elem.setAttribute("x",svgCoords.x);
-          elem.setAttribute("y",svgCoords.y); 
-          elem.textContent = "TEXT"
-        }
-        canvas.appendChild(elem);
+      function move(event){
+        console.log(event);
       }
+      function add(event){
+        const classes = canvas.classList;
+        const NS = canvas.getAttribute('xmlns');
+        const point = canvas.createSVGPoint()
+        point.x = event.offsetX;
+        point.y = event.offsetY;
+        const svgCoords = point.matrixTransform(canvas.getScreenCTM().inverse());
+        let elem;
+        if (classes.contains("active")) {
+          if (classes.contains("square")){
+            elem = doc.createElementNS(NS, "rect");
+            elem.setAttribute("x",svgCoords.x);
+            elem.setAttribute("y",svgCoords.y);
+            elem.setAttribute("width",50);
+            elem.setAttribute("height",50);
+          } else if (classes.contains("circle")){
+            elem = doc.createElementNS(NS, "circle");
+            elem.setAttribute("r",10);
+            elem.setAttribute("cx",svgCoords.x);
+            elem.setAttribute("cy",svgCoords.y);
+          } else if (classes.contains("text")){
+            elem = doc.createElementNS(NS, "text");
+            elem.setAttribute("x",svgCoords.x);
+            elem.setAttribute("y",svgCoords.y); 
+            elem.textContent = "TEXT"
+          }
+          canvas.appendChild(elem);
+          elem.addEventListener('mousemove', move, false);
+        }
     }
     document.getElementById("canvas").addEventListener("click",add);
     document.addEventListener("DOMContentLoaded", () => {
-      let doc = document;
-      let canvas = doc.getElementById("canvas");
       doc.querySelectorAll(".controls .btn").forEach((element) => {
         element.addEventListener("click", (event) => {
           let classes = canvas.classList;
@@ -170,6 +172,7 @@
         });
       });
     });
+  }
   </script>
 
 </body>
