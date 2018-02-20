@@ -32,6 +32,7 @@
     svg.canvas rect,
     svg.canvas circle {
       fill: gold;
+      cursor:move;
     }
     button svg {
       fill: cornflowerblue;
@@ -119,9 +120,36 @@
     {
       const doc = document;
       const canvas = doc.getElementById("canvas");
-      function move(event){
-        console.log(event);
+      let i = 0;
+      function getInversePoint(x,y){
+        const point = canvas.createSVGPoint();
+        point.x = x;
+        point.y = y; 
+        return point.matrixTransform(canvas.getScreenCTM().inverse());
       }
+      function move(event){
+        const elem = event.srcElement;
+        const node = elem.nodeName.toLowerCase();
+        const mousePoint = getInversePoint(event.offsetX,event.offsetY);
+        const newPoint = canvas.createSVGPoint();
+        const diffX = mousePoint.x - elem.x.baseVal.value;
+        const diffY = mousePoint.y - elem.y.baseVal.value;
+        
+        console.log(mousePoint.x,diffX,mousePoint.y,diffY)
+        newPoint.x = mousePoint.x - diffX;
+
+        newPoint.y = mousePoint.y - diffY;
+        console.log(newPoint.x,newPoint.y)
+        if (node === "rect" || node === "text") {
+            elem.x = newPoint.x;
+            elem.setAttribute("y", newPoint.y);
+            elem.setAttribute("height",50);
+          } else if (node === "circle"){
+            elem.setAttribute("cx",newPoint.x);
+            elem.setAttribute("cy",newPoint.y);
+          }
+      }
+
       function add(event){
         const classes = canvas.classList;
         const NS = canvas.getAttribute('xmlns');
@@ -149,7 +177,20 @@
             elem.textContent = "TEXT"
           }
           canvas.appendChild(elem);
-          elem.addEventListener('mousemove', move, false);
+          classes.remove("active");
+          const drag = ()=>{
+            classes.add("moving");
+            elem.classList.add("moving")
+            elem.addEventListener('mousemove', move, false);
+          }
+          const clear = ()=>{
+            classes.remove("moving");
+            elem.classList.remove("moving")
+            elem.removeEventListener('mousemove', move);
+          }
+          elem.addEventListener("mousedown", drag, false);
+          elem.addEventListener("click", (event)=>{console.log(event)}, false);
+          elem.addEventListener("mouseup", clear, false);
         }
     }
     document.getElementById("canvas").addEventListener("click",add);
