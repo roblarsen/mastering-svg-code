@@ -107,6 +107,8 @@
       </symbol>
     </defs>
   </svg>
+  
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>  
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -114,40 +116,66 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
   <script>
+    /**
+* throttle
+* @param {integer} milliseconds This param indicates the number of milliseconds
+*     to wait between calls before calling the original function.
+* @return {function} This returns a function that when called will wait the
+*     indicated number of milliseconds between calls before
+*     calling the original function.
+*/
+Function.prototype.throttle = function (milliseconds) {
+    var baseFunction = this,
+        lastEventTimestamp = null,
+        limit = milliseconds;
+
+    return function () {
+        var self = this,
+            args = arguments,
+            now = Date.now();
+
+        if (!lastEventTimestamp || now - lastEventTimestamp >= limit) {
+            lastEventTimestamp = now;
+            baseFunction.apply(self, args);
+        }
+    };
+};
+
+
     /*
     ES6
     */
     {
       const doc = document;
       const canvas = doc.getElementById("canvas");
-      let i = 0;
+     
+
       function getInversePoint(x,y){
         const point = canvas.createSVGPoint();
         point.x = x;
         point.y = y; 
         return point.matrixTransform(canvas.getScreenCTM().inverse());
       }
+      let currX = 0;
+      let currY = 0;
       function move(event){
+
         const elem = event.srcElement;
         const node = elem.nodeName.toLowerCase();
-        const mousePoint = getInversePoint(event.offsetX,event.offsetY);
-        const newPoint = canvas.createSVGPoint();
-        const diffX = mousePoint.x - elem.x.baseVal.value;
-        const diffY = mousePoint.y - elem.y.baseVal.value;
-        
-        console.log(mousePoint.x,diffX,mousePoint.y,diffY)
-        newPoint.x = mousePoint.x - diffX;
+        const box = elem.getBBox();
+        currX += event.movementX;
+        currY += event.movementY;
 
-        newPoint.y = mousePoint.y - diffY;
-        console.log(newPoint.x,newPoint.y)
-        if (node === "rect" || node === "text") {
-            elem.x = newPoint.x;
-            elem.setAttribute("y", newPoint.y);
-            elem.setAttribute("height",50);
+
+          if (node === "rect" || node === "text") {
+            let x = elem.x.baseVal.value;
+            let y = elem.y.baseVal.value
+            elem.setAttribute("transform",`translate(${currX},${currY})`)
           } else if (node === "circle"){
             elem.setAttribute("cx",newPoint.x);
             elem.setAttribute("cy",newPoint.y);
           }
+        
       }
 
       function add(event){
@@ -165,6 +193,7 @@
             elem.setAttribute("y",svgCoords.y);
             elem.setAttribute("width",50);
             elem.setAttribute("height",50);
+
           } else if (classes.contains("circle")){
             elem = doc.createElementNS(NS, "circle");
             elem.setAttribute("r",10);
@@ -176,6 +205,7 @@
             elem.setAttribute("y",svgCoords.y); 
             elem.textContent = "TEXT"
           }
+          elem.setAttribute("tranform","translate(0,0)")
           canvas.appendChild(elem);
           classes.remove("active");
           const drag = ()=>{
