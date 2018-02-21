@@ -148,36 +148,6 @@ Function.prototype.throttle = function (milliseconds) {
     {
       const doc = document;
       const canvas = doc.getElementById("canvas");
-     
-
-      function getInversePoint(x,y){
-        const point = canvas.createSVGPoint();
-        point.x = x;
-        point.y = y; 
-        return point.matrixTransform(canvas.getScreenCTM().inverse());
-      }
-      let currX = 0;
-      let currY = 0;
-      function move(event){
-
-        const elem = event.srcElement;
-        const node = elem.nodeName.toLowerCase();
-        const box = elem.getBBox();
-        currX += event.movementX;
-        currY += event.movementY;
-
-
-          if (node === "rect" || node === "text") {
-            let x = elem.x.baseVal.value;
-            let y = elem.y.baseVal.value
-            elem.setAttribute("transform",`translate(${currX},${currY})`)
-          } else if (node === "circle"){
-            elem.setAttribute("cx",newPoint.x);
-            elem.setAttribute("cy",newPoint.y);
-          }
-        
-      }
-
       function add(event){
         const classes = canvas.classList;
         const NS = canvas.getAttribute('xmlns');
@@ -205,7 +175,7 @@ Function.prototype.throttle = function (milliseconds) {
             elem.setAttribute("y",svgCoords.y); 
             elem.textContent = "TEXT"
           }
-          elem.setAttribute("tranform","translate(0,0)")
+
           canvas.appendChild(elem);
           classes.remove("active");
           const drag = ()=>{
@@ -218,9 +188,8 @@ Function.prototype.throttle = function (milliseconds) {
             elem.classList.remove("moving")
             elem.removeEventListener('mousemove', move);
           }
-          elem.addEventListener("mousedown", drag, false);
+
           elem.addEventListener("click", (event)=>{console.log(event)}, false);
-          elem.addEventListener("mouseup", clear, false);
         }
     }
     document.getElementById("canvas").addEventListener("click",add);
