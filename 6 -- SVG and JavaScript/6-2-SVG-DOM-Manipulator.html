@@ -15,25 +15,31 @@
     svg.canvas {
       border: 1px solid black;
     }
+
     svg.canvas.active {
       border: 4px solid black;
       cursor: crosshair;
     }
-    svg.canvas.active.square{
-      cursor:url(square.png), crosshair;
+
+    svg.canvas.active.square {
+      cursor: url(square.png), crosshair;
     }
-    svg.canvas.active.circle{
-      cursor:url(circle.png) 32 32, crosshair;
+
+    svg.canvas.active.circle {
+      cursor: url(circle.png) 32 32, crosshair;
     }
-    svg.canvas.active.text{
-      cursor:url(text.png), crosshair;
+
+    svg.canvas.active.text {
+      cursor: url(text.png), crosshair;
     }
+
     svg.canvas text,
     svg.canvas rect,
     svg.canvas circle {
       fill: gold;
-      cursor:move;
+      cursor: move;
     }
+
     button svg {
       fill: cornflowerblue;
       stroke: cornflowerblue;
@@ -107,8 +113,61 @@
       </symbol>
     </defs>
   </svg>
-  
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>  
+  <div class="modal" tabindex="-1" role="dialog" id="rect-edit-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit your element</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-4">
+              <label>Background color:</label>
+            </div>
+            <div class="col-8">
+                <input type="color" id="rect-color">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2">
+                <label>x:</label>
+              </div>
+              <div class="col-4">
+                <input type="number" id="rect-x" class="form-control">
+              </div>
+              <div class="col-2">
+                <label>y:</label>
+              </div>
+              <div class="col-4">
+                <input type="number" id="rect-y" class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2">
+                <label>width:</label>
+              </div>
+              <div class="col-4">
+                <input type="number" id="rect-width" class="form-control">
+              </div>
+              <div class="col-2">
+                <label>height:</label>
+              </div>
+              <div class="col-4">
+                <input type="number" id="rect-height" class="form-control">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="save">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -116,39 +175,24 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
   <script>
-    /**
-* throttle
-* @param {integer} milliseconds This param indicates the number of milliseconds
-*     to wait between calls before calling the original function.
-* @return {function} This returns a function that when called will wait the
-*     indicated number of milliseconds between calls before
-*     calling the original function.
-*/
-Function.prototype.throttle = function (milliseconds) {
-    var baseFunction = this,
-        lastEventTimestamp = null,
-        limit = milliseconds;
-
-    return function () {
-        var self = this,
-            args = arguments,
-            now = Date.now();
-
-        if (!lastEventTimestamp || now - lastEventTimestamp >= limit) {
-            lastEventTimestamp = now;
-            baseFunction.apply(self, args);
-        }
-    };
-};
-
-
     /*
     ES6
     */
     {
       const doc = document;
       const canvas = doc.getElementById("canvas");
-      function add(event){
+      function edit(event) {
+        console.log(event);
+        if (event.srcElement.nodeName.toLowerCase()==="rect"){
+          $("#rect-edit-modal").modal("show");
+          document.getElementById("rect-color").value= event.srcElement.getAttribute("fill");
+          document.getElementById("rect-x").value= event.srcElement.getAttribute("x");
+          document.getElementById("rect-y").value= event.srcElement.getAttribute("y");
+          document.getElementById("rect-width").value= event.srcElement.getAttribute("width");
+          document.getElementById("rect-height").value= event.srcElement.getAttribute("height");
+        }
+              }
+      function add(event) {
         const classes = canvas.classList;
         const NS = canvas.getAttribute('xmlns');
         const point = canvas.createSVGPoint()
@@ -157,62 +201,51 @@ Function.prototype.throttle = function (milliseconds) {
         const svgCoords = point.matrixTransform(canvas.getScreenCTM().inverse());
         let elem;
         if (classes.contains("active")) {
-          if (classes.contains("square")){
+          if (classes.contains("square")) {
             elem = doc.createElementNS(NS, "rect");
-            elem.setAttribute("x",svgCoords.x);
-            elem.setAttribute("y",svgCoords.y);
-            elem.setAttribute("width",50);
-            elem.setAttribute("height",50);
+            elem.setAttribute("x", svgCoords.x);
+            elem.setAttribute("y", svgCoords.y);
+            elem.setAttribute("width", 50);
+            elem.setAttribute("height", 50);
 
-          } else if (classes.contains("circle")){
+          } else if (classes.contains("circle")) {
             elem = doc.createElementNS(NS, "circle");
-            elem.setAttribute("r",10);
-            elem.setAttribute("cx",svgCoords.x);
-            elem.setAttribute("cy",svgCoords.y);
-          } else if (classes.contains("text")){
+            elem.setAttribute("r", 10);
+            elem.setAttribute("cx", svgCoords.x);
+            elem.setAttribute("cy", svgCoords.y);
+          } else if (classes.contains("text")) {
             elem = doc.createElementNS(NS, "text");
-            elem.setAttribute("x",svgCoords.x);
-            elem.setAttribute("y",svgCoords.y); 
+            elem.setAttribute("x", svgCoords.x);
+            elem.setAttribute("y", svgCoords.y);
             elem.textContent = "TEXT"
           }
 
           canvas.appendChild(elem);
           classes.remove("active");
-          const drag = ()=>{
-            classes.add("moving");
-            elem.classList.add("moving")
-            elem.addEventListener('mousemove', move, false);
-          }
-          const clear = ()=>{
-            classes.remove("moving");
-            elem.classList.remove("moving")
-            elem.removeEventListener('mousemove', move);
-          }
-
-          elem.addEventListener("click", (event)=>{console.log(event)}, false);
+          elem.addEventListener("click", edit, false);
         }
-    }
-    document.getElementById("canvas").addEventListener("click",add);
-    document.addEventListener("DOMContentLoaded", () => {
-      doc.querySelectorAll(".controls .btn").forEach((element) => {
-        element.addEventListener("click", (event) => {
-          let classes = canvas.classList;
-          const type = event.srcElement.dataset.type;
-          
-          if (classes.contains("active") && classes.contains(type)){
-            classes.remove("active",type);
-          }
-          else if (classes.contains("active")){
-            classes.remove("circle","text","square");
-            classes.add(type);
-          } else {
-            classes.remove("circle","text","square");
-            classes.add("active",type);
-          }
+      }
+      document.getElementById("canvas").addEventListener("click", add);
+      document.addEventListener("DOMContentLoaded", () => {
+        doc.querySelectorAll(".controls .btn").forEach((element) => {
+          element.addEventListener("click", (event) => {
+            let classes = canvas.classList;
+            const type = event.srcElement.dataset.type;
+
+            if (classes.contains("active") && classes.contains(type)) {
+              classes.remove("active", type);
+            }
+            else if (classes.contains("active")) {
+              classes.remove("circle", "text", "square");
+              classes.add(type);
+            } else {
+              classes.remove("circle", "text", "square");
+              classes.add("active", type);
+            }
+          });
         });
       });
-    });
-  }
+    }
   </script>
 
 </body>
