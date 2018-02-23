@@ -36,8 +36,7 @@
     svg.canvas text,
     svg.canvas rect,
     svg.canvas circle {
-      fill: gold;
-      cursor: move;
+      cursor: pointer;
     }
 
     button svg {
@@ -161,12 +160,61 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="save">Save changes</button>
+          <button type="button" class="btn btn-primary" id="rect-save">Save changes</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
+  <div class="modal" tabindex="-1" role="dialog" id="circle-edit-modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit your element</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-4">
+                <label>Background color:</label>
+              </div>
+              <div class="col-8">
+                  <input type="color" id="circle-color">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-2">
+                  <label>cx:</label>
+                </div>
+                <div class="col-4">
+                  <input type="number" id="circle-cx" class="form-control">
+                </div>
+                <div class="col-2">
+                  <label>cy:</label>
+                </div>
+                <div class="col-4">
+                  <input type="number" id="circle-cy" class="form-control">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-2">
+                  <label>radius:</label>
+                </div>
+                <div class="col-4">
+                  <input type="number" id="circle-radius" class="form-control">
+                </div>
+                
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="circle-save">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
@@ -182,16 +230,51 @@
       const doc = document;
       const canvas = doc.getElementById("canvas");
       function edit(event) {
-        console.log(event);
         if (event.srcElement.nodeName.toLowerCase()==="rect"){
-          $("#rect-edit-modal").modal("show");
+          $("#rect-edit-modal").modal("show").data("current-element",event.srcElement);
           document.getElementById("rect-color").value= event.srcElement.getAttribute("fill");
           document.getElementById("rect-x").value= event.srcElement.getAttribute("x");
           document.getElementById("rect-y").value= event.srcElement.getAttribute("y");
           document.getElementById("rect-width").value= event.srcElement.getAttribute("width");
           document.getElementById("rect-height").value= event.srcElement.getAttribute("height");
         }
+        if (event.srcElement.nodeName.toLowerCase()==="circle"){
+          $("#circle-edit-modal").modal("show").data("current-element",event.srcElement);
+          document.getElementById("circle-color").value= event.srcElement.getAttribute("fill");
+          document.getElementById("circle-cx").value= event.srcElement.getAttribute("cx");
+          document.getElementById("circle-cy").value= event.srcElement.getAttribute("cy");
+          document.getElementById("circle-radius").value= event.srcElement.getAttribute("r");
+        }
               }
+      function rectSave(){
+        $("#rect-edit-modal").modal("hide");
+        let elem =  $("#rect-edit-modal").data("current-element")
+        elem.setAttribute("fill",document.getElementById("rect-color").value); 
+        elem.setAttribute("x",document.getElementById("rect-x").value); 
+        elem.setAttribute("y",document.getElementById("rect-y").value); 
+        elem.setAttribute("height",document.getElementById("rect-height").value); 
+        elem.setAttribute("width",document.getElementById("rect-width").value); 
+        
+
+      }
+      function circleSave(){
+        $("#circle-edit-modal").modal("hide");
+        let elem =  $("#circle-edit-modal").data("current-element")
+        elem.setAttribute("fill",document.getElementById("circle-color").value); 
+        elem.setAttribute("cx",document.getElementById("circle-cx").value); 
+        elem.setAttribute("cy",document.getElementById("circle-cy").value); 
+        elem.setAttribute("r",document.getElementById("circle-radius").value); 
+
+      }
+      function textSave(){
+        $("#circle-edit-modal").modal("hide");
+        let elem =  $("#circle-edit-modal").data("current-element")
+        elem.setAttribute("fill",document.getElementById("circle-color").value); 
+        elem.setAttribute("cx",document.getElementById("circle-cx").value); 
+        elem.setAttribute("cy",document.getElementById("circle-cy").value); 
+        elem.setAttribute("radius",document.getElementById("circle-radius").value); 
+
+      }
       function add(event) {
         const classes = canvas.classList;
         const NS = canvas.getAttribute('xmlns');
@@ -219,12 +302,17 @@
             elem.setAttribute("y", svgCoords.y);
             elem.textContent = "TEXT"
           }
-
+          elem.setAttribute("fill","#ff8000");
           canvas.appendChild(elem);
           classes.remove("active");
           elem.addEventListener("click", edit, false);
         }
       }
+      document.getElementById("rect-save").addEventListener("click", rectSave);
+      
+      document.getElementById("circle-save").addEventListener("click", circleSave);
+      
+      document.getElementById("rect-save").addEventListener("click", textSave);
       document.getElementById("canvas").addEventListener("click", add);
       document.addEventListener("DOMContentLoaded", () => {
         doc.querySelectorAll(".controls .btn").forEach((element) => {
