@@ -273,12 +273,11 @@
     crossorigin="anonymous"></script>
   <script>
     /*
-    ES6
+    ES5
     */
-    {
-      const doc = document;
-      const canvas = doc.getElementById("canvas");
-      function edit(event) {
+   $().ready(init);
+
+      /*function edit(event) {
         if (event.srcElement.nodeName.toLowerCase() === "rect") {
           $("#rect-edit-modal").modal("show").data("current-element", event.srcElement);
           document.getElementById("rect-color").value = event.srcElement.getAttribute("fill");
@@ -364,30 +363,30 @@
           elem.addEventListener("click", edit, false);
         }
       }
-      document.getElementById("rect-save").addEventListener("click", rectSave);
-      document.getElementById("circle-save").addEventListener("click", circleSave);
-      document.getElementById("text-save").addEventListener("click", textSave);
-      document.getElementById("canvas").addEventListener("click", add);
-      document.addEventListener("DOMContentLoaded", () => {
-        doc.querySelectorAll(".controls .btn").forEach((element) => {
-          element.addEventListener("click", (event) => {
-            let classes = canvas.classList;
-            const type = event.srcElement.dataset.type;
-
-            if (classes.contains("active") && classes.contains(type)) {
-              classes.remove("active", type);
-            }
-            else if (classes.contains("active")) {
-              classes.remove("circle", "text", "square");
-              classes.add(type);
-            } else {
-              classes.remove("circle", "text", "square");
-              classes.add("active", type);
-            }
-          });
-        });
+      
+    }*/
+    function init(){
+      $(".controls .btn").on("click",function($event){
+          var $canvas = $("#canvas");
+          var type = $($event.target).data("type");
+          console.log($event);
+          if ($canvas.hasClass("active") && $canvas.hasClass(type)) {
+            $canvas.removeClass("active "+ type);
+          }
+          else if ($canvas.hasClass("active")) {
+            $canvas.removeClass("circle text square");
+            $canvas.addClass(type);
+          } else {
+            $canvas.removeClass("circle text square");
+            $canvas.addClass("active "+type);
+        }
+        $("#rect-save").on("click", rectSave);
+        $("#circle-save").on("click", circleSave);
+        $("#text-save").on("click", textSave);
+        $("#canvas").on("click", add);
       });
     }
+      
   </script>
 
 </body>
