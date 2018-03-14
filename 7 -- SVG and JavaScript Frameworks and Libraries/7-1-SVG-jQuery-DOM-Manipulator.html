@@ -277,7 +277,7 @@
     */
    $().ready(init);
 
-      /*function edit(event) {
+      function edit(event) {
         if (event.srcElement.nodeName.toLowerCase() === "rect") {
           $("#rect-edit-modal").modal("show").data("current-element", event.srcElement);
           document.getElementById("rect-color").value = event.srcElement.getAttribute("fill");
@@ -300,7 +300,7 @@
           document.getElementById("text-y").value = event.srcElement.getAttribute("y");
           document.getElementById("text-text").value = event.srcElement.textContent;
         }
-      }
+      }/*
       function rectSave() {
         $("#rect-edit-modal").modal("hide");
         let elem = $("#rect-edit-modal").data("current-element")
@@ -330,41 +330,51 @@
         elem.textContent = document.getElementById("text-text").value;
 
       }
-      function add(event) {
-        const classes = canvas.classList;
-        const NS = canvas.getAttribute('xmlns');
-        const point = canvas.createSVGPoint()
-        point.x = event.offsetX;
-        point.y = event.offsetY;
-        const svgCoords = point.matrixTransform(canvas.getScreenCTM().inverse());
-        let elem;
-        if (classes.contains("active")) {
-          if (classes.contains("square")) {
-            elem = doc.createElementNS(NS, "rect");
-            elem.setAttribute("x", svgCoords.x);
-            elem.setAttribute("y", svgCoords.y);
-            elem.setAttribute("width", 50);
-            elem.setAttribute("height", 50);
+      */
+      function add($event) {
+        var $canvas = $("#canvas");
+        var elem;
+        var doc = document;
+        var NS = canvas.getAttribute('xmlns');
+        var point = canvas.createSVGPoint()
+        var $elem;
+        point.x = $event.offsetX;
+        point.y = $event.offsetY;
+        var svgCoords = point.matrixTransform(canvas.getScreenCTM().inverse());
+        if ($canvas.hasClass("active")) {
+          if ($canvas.hasClass("square")) {
+            elem = doc.createElementNS( NS, "rect"); 
+            $elem = $(elem).attr({
+              "x" : svgCoords.x,
+              "y" : svgCoords.y,
+              "width" : 50,
+              "height": 50
+            });
 
-          } else if (classes.contains("circle")) {
+          } else if ($canvas.hasClass("circle")) {
             elem = doc.createElementNS(NS, "circle");
-            elem.setAttribute("r", 10);
-            elem.setAttribute("cx", svgCoords.x);
-            elem.setAttribute("cy", svgCoords.y);
-          } else if (classes.contains("text")) {
+            $elem = $(elem).attr({
+              "cx" : svgCoords.x,
+              "cy" : svgCoords.y,
+              "r" : 10
+            });
+          } else if ($canvas.hasClass("text")) {
             elem = doc.createElementNS(NS, "text");
-            elem.setAttribute("x", svgCoords.x);
-            elem.setAttribute("y", svgCoords.y);
-            elem.textContent = "TEXT"
+            $elem = $(elem).attr({
+              "x" : svgCoords.x,
+              "y" : svgCoords.y,
+              "width" : 50,
+              "height": 50
+            });
+            $elem.text("TEXT");
           }
-          elem.setAttribute("fill", "#ff8000");
-          canvas.appendChild(elem);
-          classes.remove("active");
-          elem.addEventListener("click", edit, false);
+          $elem.attr("fill", "#ff8000");
+          $canvas.append($elem);
+          $canvas.removeClass("active");
+          $elem.on("click", edit);
         }
       }
       
-    }*/
     function init(){
       $(".controls .btn").on("click",function($event){
           var $canvas = $("#canvas");
@@ -380,9 +390,9 @@
             $canvas.removeClass("circle text square");
             $canvas.addClass("active "+type);
         }
-        $("#rect-save").on("click", rectSave);
-        $("#circle-save").on("click", circleSave);
-        $("#text-save").on("click", textSave);
+       // $("#rect-save").on("click", rectSave);
+        //$("#circle-save").on("click", circleSave);
+        //$("#text-save").on("click", textSave);
         $("#canvas").on("click", add);
       });
     }
