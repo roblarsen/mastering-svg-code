@@ -277,60 +277,61 @@
     */
    $().ready(init);
 
-      function edit(event) {
+      function edit($event) {
+        console.log($event)
+        var $elem = $($event.target)
         if (event.srcElement.nodeName.toLowerCase() === "rect") {
-          $("#rect-edit-modal").modal("show").data("current-element", event.srcElement);
-          document.getElementById("rect-color").value = event.srcElement.getAttribute("fill");
-          document.getElementById("rect-x").value = event.srcElement.getAttribute("x");
-          document.getElementById("rect-y").value = event.srcElement.getAttribute("y");
-          document.getElementById("rect-width").value = event.srcElement.getAttribute("width");
-          document.getElementById("rect-height").value = event.srcElement.getAttribute("height");
+          $("#rect-edit-modal").modal("show").data("current-element", $elem);
+
+          $("#rect-color").val($elem.attr("fill"));
+          $("#rect-x").val($elem.attr("x"));
+          $("#rect-y").val($elem.attr("y"));
+          $("#rect-width").val($elem.attr("width"));
+          $("#rect-height").val($elem.attr("height"));
         }
         else if (event.srcElement.nodeName.toLowerCase() === "circle") {
-          $("#circle-edit-modal").modal("show").data("current-element", event.srcElement);
-          document.getElementById("circle-color").value = event.srcElement.getAttribute("fill");
-          document.getElementById("circle-cx").value = event.srcElement.getAttribute("cx");
-          document.getElementById("circle-cy").value = event.srcElement.getAttribute("cy");
-          document.getElementById("circle-radius").value = event.srcElement.getAttribute("r");
+          $("#circle-edit-modal").modal("show").data("current-element", $elem);
+          $("#circle-color").val($elem.attr("fill"));
+          $("#circle-cx").val($elem.attr("cx"));
+          $("#circle-cy").val($elem.attr("cy"));
+          $("#circle-radius").val($elem.attr("r"));
         }
         else if (event.srcElement.nodeName.toLowerCase() === "text") {
-          $("#text-edit-modal").modal("show").data("current-element", event.srcElement);
-          document.getElementById("text-color").value = event.srcElement.getAttribute("fill");
-          document.getElementById("text-x").value = event.srcElement.getAttribute("x");
-          document.getElementById("text-y").value = event.srcElement.getAttribute("y");
-          document.getElementById("text-text").value = event.srcElement.textContent;
+          $("#text-edit-modal").modal("show").data("current-element", $elem);
+          $("#text-color").val($elem.attr("fill"));
+          $("#text-x").val($elem.attr("x"));
+          $("#text-y").val($elem.attr("y"));
+          $("#text-text").val($elem.text());
         }
-      }/*
+      }
       function rectSave() {
         $("#rect-edit-modal").modal("hide");
-        let elem = $("#rect-edit-modal").data("current-element")
-        elem.setAttribute("fill", document.getElementById("rect-color").value);
-        elem.setAttribute("x", document.getElementById("rect-x").value);
-        elem.setAttribute("y", document.getElementById("rect-y").value);
-        elem.setAttribute("height", document.getElementById("rect-height").value);
-        elem.setAttribute("width", document.getElementById("rect-width").value);
-
-
+        var $elem = $("#rect-edit-modal").data("current-element")
+        $(elem).attr({
+          "fill": $("#rect-color").val(),
+          "x": $("#rect-x").val(),
+          "y": $("#rect-y").val(),
+          "height": $("#rect-height").val(),
+          "width": $("#rect-width").val()
+        });
       }
       function circleSave() {
         $("#circle-edit-modal").modal("hide");
-        let elem = $("#circle-edit-modal").data("current-element")
-        elem.setAttribute("fill", document.getElementById("circle-color").value);
-        elem.setAttribute("cx", document.getElementById("circle-cx").value);
-        elem.setAttribute("cy", document.getElementById("circle-cy").value);
-        elem.setAttribute("r", document.getElementById("circle-radius").value);
-
+        var $elem = $("#circle-edit-modal").data("current-element")
+        $(elem).attr({"fill", $("#circle-color").val());
+        elem.setAttribute("cx", $("#circle-cx").val());
+        elem.setAttribute("cy", $("#circle-cy").val());
+        elem.setAttribute("r", $("#circle-radius").val());
       }
       function textSave() {
         $("#text-edit-modal").modal("hide");
-        let elem = $("#text-edit-modal").data("current-element")
-        elem.setAttribute("fill", document.getElementById("text-color").value);
-        elem.setAttribute("x", document.getElementById("text-x").value);
-        elem.setAttribute("y", document.getElementById("text-y").value);
-        elem.textContent = document.getElementById("text-text").value;
+        var $elem = $("#text-edit-modal").data("current-element")
+        $(elem).attr({"fill", $("#text-color").val());
+        elem.setAttribute("x", $("#text-x").val());
+        elem.setAttribute("y", $("#text-y").val());
+        elem.textContent = $("#text-text").text();
 
       }
-      */
       function add($event) {
         var $canvas = $("#canvas");
         var elem;
@@ -379,7 +380,6 @@
       $(".controls .btn").on("click",function($event){
           var $canvas = $("#canvas");
           var type = $($event.target).data("type");
-          console.log($event);
           if ($canvas.hasClass("active") && $canvas.hasClass(type)) {
             $canvas.removeClass("active "+ type);
           }
