@@ -328,12 +328,10 @@
       function textSave() {
         $("#text-edit-modal").modal("hide");
         var $elem = $("#text-edit-modal").data("current-element")
-        console.log($elem);
         $elem.attr({"fill": $("#text-color").val(),"x": $("#text-x").val(),
        "y": $("#text-y").val()});
-        $elem.text($("#text-text").text());
-
-      }
+        $elem.text($("#text-text").val());
+}
       function add($event) {
         var $canvas = $("#canvas");
         var elem;
@@ -356,6 +354,7 @@
 
           } else if ($canvas.hasClass("circle")) {
             elem = doc.createElementNS(NS, "circle");
+          
             $elem = $(elem).attr({
               "cx" : svgCoords.x,
               "cy" : svgCoords.y,
@@ -369,7 +368,8 @@
               "width" : 50,
               "height": 50
             });
-            $elem.text("TEXT");
+            $elem.text("TEXT")
+            
           }
           $elem.attr("fill", "#ff8000");
           $canvas.append($elem);
