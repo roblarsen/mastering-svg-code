@@ -275,130 +275,134 @@
     /*
     ES5
     */
-   $().ready(init);
+    $().ready(init);
 
-      function edit($event) {
-        var $elem = $($event.target)
-        console.log($elem)
-        if ($elem.prop("nodeName") === "rect") {
-          $("#rect-edit-modal").modal("show").data("current-element", $elem);
+    function edit($event) {
+      var $elem = $($event.target)
+      console.log($elem)
+      if ($elem.prop("nodeName") === "rect") {
+        $("#rect-edit-modal").modal("show").data("current-element", $elem);
 
-          $("#rect-color").val($elem.attr("fill"));
-          $("#rect-x").val($elem.attr("x"));
-          $("#rect-y").val($elem.attr("y"));
-          $("#rect-width").val($elem.attr("width"));
-          $("#rect-height").val($elem.attr("height"));
-        }
-        else if ($elem.prop("nodeName") === "circle") {
-          $("#circle-edit-modal").modal("show").data("current-element", $elem);
-          $("#circle-color").val($elem.attr("fill"));
-          $("#circle-cx").val($elem.attr("cx"));
-          $("#circle-cy").val($elem.attr("cy"));
-          $("#circle-radius").val($elem.attr("r"));
-        }
-        else if ($elem.prop("nodeName") === "text") {
-          $("#text-edit-modal").modal("show").data("current-element", $elem);
-          $("#text-color").val($elem.attr("fill"));
-          $("#text-x").val($elem.attr("x"));
-          $("#text-y").val($elem.attr("y"));
-          $("#text-text").val($elem.text());
-        }
+        $("#rect-color").val($elem.attr("fill"));
+        $("#rect-x").val($elem.attr("x"));
+        $("#rect-y").val($elem.attr("y"));
+        $("#rect-width").val($elem.attr("width"));
+        $("#rect-height").val($elem.attr("height"));
       }
-      function rectSave() {
-        $("#rect-edit-modal").modal("hide");
-        var $elem = $("#rect-edit-modal").data("current-element")
-        console.log($elem);
-        $elem.attr({
-          "fill": $("#rect-color").val(),
-          "x": $("#rect-x").val(),
-          "y": $("#rect-y").val(),
-          "height": $("#rect-height").val(),
-          "width": $("#rect-width").val()
-        });
+      else if ($elem.prop("nodeName") === "circle") {
+        $("#circle-edit-modal").modal("show").data("current-element", $elem);
+        $("#circle-color").val($elem.attr("fill"));
+        $("#circle-cx").val($elem.attr("cx"));
+        $("#circle-cy").val($elem.attr("cy"));
+        $("#circle-radius").val($elem.attr("r"));
       }
-      function circleSave() {
-        $("#circle-edit-modal").modal("hide");
-        var $elem = $("#circle-edit-modal").data("current-element")
-        console.log($elem);
-        $elem.attr({"fill": $("#circle-color").val(),
-        "cx": $("#circle-cx").val(),
-        "cy": $("#circle-cy").val(),
-        "r":$("#circle-radius").val()});
+      else if ($elem.prop("nodeName") === "text") {
+        $("#text-edit-modal").modal("show").data("current-element", $elem);
+        $("#text-color").val($elem.attr("fill"));
+        $("#text-x").val($elem.attr("x"));
+        $("#text-y").val($elem.attr("y"));
+        $("#text-text").val($elem.text());
       }
-      function textSave() {
-        $("#text-edit-modal").modal("hide");
-        var $elem = $("#text-edit-modal").data("current-element")
-        $elem.attr({"fill": $("#text-color").val(),"x": $("#text-x").val(),
-       "y": $("#text-y").val()});
-        $elem.text($("#text-text").val());
-}
-      function add($event) {
-        var $canvas = $("#canvas");
-        var elem;
-        var doc = document;
-        var NS = canvas.getAttribute('xmlns');
-        var point = canvas.createSVGPoint()
-        var $elem;
-        point.x = $event.offsetX;
-        point.y = $event.offsetY;
-        var svgCoords = point.matrixTransform(canvas.getScreenCTM().inverse());
-        if ($canvas.hasClass("active")) {
-          if ($canvas.hasClass("square")) {
-            elem = doc.createElementNS( NS, "rect"); 
-            $elem = $(elem).attr({
-              "x" : svgCoords.x,
-              "y" : svgCoords.y,
-              "width" : 50,
-              "height": 50
-            });
-
-          } else if ($canvas.hasClass("circle")) {
-            elem = doc.createElementNS(NS, "circle");
-          
-            $elem = $(elem).attr({
-              "cx" : svgCoords.x,
-              "cy" : svgCoords.y,
-              "r" : 10
-            });
-          } else if ($canvas.hasClass("text")) {
-            elem = doc.createElementNS(NS, "text");
-            $elem = $(elem).attr({
-              "x" : svgCoords.x,
-              "y" : svgCoords.y,
-              "width" : 50,
-              "height": 50
-            });
-            $elem.text("TEXT")
-            
-          }
-          $elem.attr("fill", "#ff8000");
-          $canvas.append($elem);
-          $canvas.removeClass("active");
-          $elem.on("click", edit);
-        }
-      }
-      
-    function init(){
-      $(".controls .btn").on("click",function($event){
-          var $canvas = $("#canvas");
-          var type = $($event.target).data("type");
-          if ($canvas.hasClass("active") && $canvas.hasClass(type)) {
-            $canvas.removeClass("active "+ type);
-          }
-          else if ($canvas.hasClass("active")) {
-            $canvas.removeClass("circle text square");
-            $canvas.addClass(type);
-          } else {
-            $canvas.removeClass("circle text square");
-            $canvas.addClass("active "+type);
-        }
-        $("#rect-save").on("click", rectSave);
-        $("#circle-save").on("click", circleSave);
-        $("#text-save").on("click", textSave);
-        $("#canvas").on("click", add);
+    }
+    function rectSave() {
+      $("#rect-edit-modal").modal("hide");
+      var $elem = $("#rect-edit-modal").data("current-element")
+      console.log($elem);
+      $elem.attr({
+        "fill": $("#rect-color").val(),
+        "x": $("#rect-x").val(),
+        "y": $("#rect-y").val(),
+        "height": $("#rect-height").val(),
+        "width": $("#rect-width").val()
       });
     }
-      
+    function circleSave() {
+      $("#circle-edit-modal").modal("hide");
+      var $elem = $("#circle-edit-modal").data("current-element")
+      console.log($elem);
+      $elem.attr({
+        "fill": $("#circle-color").val(),
+        "cx": $("#circle-cx").val(),
+        "cy": $("#circle-cy").val(),
+        "r": $("#circle-radius").val()      
+      });
+    }
+    function textSave() {
+      $("#text-edit-modal").modal("hide");
+      var $elem = $("#text-edit-modal").data("current-element")
+      $elem.attr({        
+"fill": $("#text-color").val(), "x": $("#text-x").val(),
+        "y": $("#text-y").val()
+      });
+      $elem.text($("#text-text").val());
+    }
+    function add($event) {
+      var $canvas = $("#canvas");
+      var elem;
+      var doc = document;
+      var NS = canvas.getAttribute('xmlns');
+      var point = canvas.createSVGPoint()
+      var $elem;
+      point.x = $event.offsetX;
+      point.y = $event.offsetY;
+      var svgCoords = point.matrixTransform(canvas.getScreenCTM().inverse());
+      if ($canvas.hasClass("active")) {
+        if ($canvas.hasClass("square")) {
+          elem = doc.createElementNS(NS, "rect");
+          $elem = $(elem).attr({
+            "x": svgCoords.x,
+            "y": svgCoords.y,
+            "width": 50,
+            "height": 50
+          });
+
+        } else if ($canvas.hasClass("circle")) {
+          elem = doc.createElementNS(NS, "circle");
+
+          $elem = $(elem).attr({
+            "cx": svgCoords.x,
+            "cy": svgCoords.y,
+            "r": 10
+          });
+        } else if ($canvas.hasClass("text")) {
+          elem = doc.createElementNS(NS, "text");
+          $elem = $(elem).attr({
+            "x": svgCoords.x,
+            "y": svgCoords.y,
+            "width": 50,
+            "height": 50
+          });
+          $elem.text("TEXT")
+
+        }
+        $elem.attr("fill", "#ff8000");
+        $canvas.append($elem);
+        $canvas.removeClass("active");
+        $elem.on("click", edit);
+      }
+    }
+    function loadCursor($event){
+      var $canvas = $("#canvas");
+      var type = $($event.target).data("type");
+      if ($canvas.hasClass("active") && $canvas.hasClass(type)) {
+        $canvas.removeClass("active " + type);
+      }
+      else if ($canvas.hasClass("active")) {
+        $canvas.removeClass("circle text square");
+        $canvas.addClass(type);
+      } else {
+        $canvas.removeClass("circle text square");
+        $canvas.addClass("active " + type);
+      }
+    }
+    function init() {
+      $(".controls .btn").on("click", loadCursor);      
+      $("#rect-save").on("click", rectSave);
+      $("#circle-save").on("click", circleSave);
+      $("#text-save").on("click", textSave);
+      $("#canvas").on("click", add);
+    }
+
   </script>
 
 </body>
