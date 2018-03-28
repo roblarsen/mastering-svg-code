@@ -1,14 +1,40 @@
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div ng-controller="circleController" class="container">
+  <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150" version="1.1">
+    <circle
+    fill="#cc0000"
+    cx="75"
+    cy="75"
+    r="50" />
 
+  </svg>
+  <div class="row">
+    <div class="col-4">
+      <label>Background color:</label>
+    </div>
+    <div class="col-8">
+      <input type="color" id="circle-color">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label>cx:</label>
+    </div>
+    <div class="col-4">
+      <input type="number" id="circle-cx" class="form-control">
+    </div>
+    <div class="col-2">
+      <label>cy:</label>
+    </div>
+    <div class="col-4">
+      <input type="number" id="circle-cy" class="form-control">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label>radius:</label>
+    </div>
+    <div class="col-4">
+      <input type="number" id="circle-radius" class="form-control">
+    </div>
+  </div>
+</div>
