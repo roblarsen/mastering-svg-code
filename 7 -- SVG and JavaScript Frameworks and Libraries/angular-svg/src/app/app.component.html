@@ -1,18 +1,18 @@
-<div ng-controller="circleController" class="container">
+<div class="container">
   <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150" version="1.1">
-    <circle
-    fill="#cc0000"
-    cx="75"
-    cy="75"
-    r="50" />
-
+    <svg:circle
+    [attr.fill]="color"
+    [attr.cx]="cx"
+    [attr.cy]="cy"
+    [attr.r]="r" />
+    <g angular-rect></g>
   </svg>
   <div class="row">
     <div class="col-4">
       <label>Background color:</label>
     </div>
     <div class="col-8">
-      <input type="color" id="circle-color">
+      <input type="color" [(ngModel)]="color" id="circle-color">
     </div>
   </div>
   <div class="row">
@@ -20,13 +20,13 @@
       <label>cx:</label>
     </div>
     <div class="col-4">
-      <input type="number" id="circle-cx" class="form-control">
+      <input type="number" id="circle-cx" [(ngModel)]="cx" class="form-control">
     </div>
     <div class="col-2">
       <label>cy:</label>
     </div>
     <div class="col-4">
-      <input type="number" id="circle-cy" class="form-control">
+      <input type="number" id="circle-cy" [(ngModel)]="cy" class="form-control">
     </div>
   </div>
   <div class="row">
@@ -34,7 +34,7 @@
       <label>radius:</label>
     </div>
     <div class="col-4">
-      <input type="number" id="circle-radius" class="form-control">
+      <input type="number" id="circle-radius" [(ngModel)]="r" class="form-control">
     </div>
   </div>
 </div>
