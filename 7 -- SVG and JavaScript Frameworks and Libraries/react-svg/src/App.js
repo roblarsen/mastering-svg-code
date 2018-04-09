@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       cx: 75,
       cy: 75,
@@ -72,7 +72,7 @@ class App extends Component {
           onChange={this.handleChange} />
         </div>
       </div>
-    </div>    
+    </div>
     );
   }
 }
