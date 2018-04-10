@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import ReactRect from './rect';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class App extends Component {
     const value = target.value;
     const name = target.name;
     this.setState({
-      [name]: event.target.value
+      [name]: value
     });
   }
   render() {
@@ -32,7 +33,7 @@ class App extends Component {
         cx={cx}
         fill={color}
         ></circle>
-        <g></g>
+        <ReactRect></ReactRect>
       </svg>
       <div className="row">
         <div className="col-4">
