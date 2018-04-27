@@ -98,7 +98,10 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    const maxRange = 200;
+    const canvas = document.getElementById("canvas");
+    console.log(canvas.viewBox.baseVal);
+    const maxYRange = 275;
+    const maxXRange = 675;
     const years = data.length;
     const total = data.reduce((total, item) => {
       return total + item.hrs;
@@ -108,7 +111,7 @@
       return item.hrs - avg;
     });
     const maxDiff = maxDiffer(diffs);
-    const intervals = maxRange/maxDiff;
-    console.log(intervals);
+    const yIntervals = maxYRange/maxDiff;
+    
   });
 }
