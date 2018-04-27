@@ -62,26 +62,39 @@
   ];
   const doc = document;
   const canvas = doc.getElementById("canvas");
-  function addLine(coords, color = "#ff8000") {
-    const NS = canvas.getAttribute('xmlns');
-    const startingPoint = canvas.createSVGPoint();
-    const endingPoint = canvas.createSVGPoint();
-    console.log(coords);
-    startingPoint.x = coords.x1;
-    startingPoint.y = coords.y1;
-    endingPoint.x = coords.x2;
-    endingPoint.y = coords.y2;
-    const startingCoords = startingPoint.matrixTransform(canvas.getScreenCTM().inverse());
-    const endingCoords = endingPoint.matrixTransform(canvas.getScreenCTM().inverse());
-    console.log(startingCoords, endingCoords, color);
-
+  function addText(coords,text) {
     let elem;
+    const NS = canvas.getAttribute('xmlns');
+    elem = doc.createElementNS(NS, "text");
+    elem.setAttribute("x", coords.x);
+    elem.setAttribute("y", coords.y);
+    elem.textContent = text;
+    canvas.appendChild(elem);
+
+  }
+
+  function addLine(coords, stroke = "#ff8000") {
+    let elem;
+    const NS = canvas.getAttribute('xmlns');
     elem = doc.createElementNS(NS, "line");
-    elem.setAttribute("x1", startingCoords.x);
-    elem.setAttribute("y1", startingCoords.y);
-    elem.setAttribute("x2", endingCoords.x);
-    elem.setAttribute("y2", endingCoords.y);
-    elem.setAttribute("stroke", color);
+    elem.setAttribute("x1", coords.x1);
+    elem.setAttribute("y1", coords.y1);
+    elem.setAttribute("x2", coords.x2);
+    elem.setAttribute("y2", coords.y2);
+    elem.setAttribute("stroke", stroke);
+    canvas.appendChild(elem);
+
+  }
+  function addRect(coords, fill = "#ff8000", stroke = "#ffffff") {
+    let elem;
+    const NS = canvas.getAttribute('xmlns');
+    elem = doc.createElementNS(NS, "rect");
+    elem.setAttribute("x", coords.x);
+    elem.setAttribute("y", coords.y);
+    elem.setAttribute("width", coords.width);
+    elem.setAttribute("height", coords.height);
+    elem.setAttribute("fill", fill);
+    elem.setAttribute("stroke", stroke);
     canvas.appendChild(elem);
 
   }
@@ -98,20 +111,54 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById("canvas");
-    console.log(canvas.viewBox.baseVal);
-    const maxYRange = 275;
-    const maxXRange = 675;
+    const viewBox = canvas.viewBox.baseVal;
+    const width = viewBox.width;
+    const height = viewBox.height;
+    const x = viewBox.x;
+    const y = viewBox.y;
+    const padding = width/200;
+
     const years = data.length;
     const total = data.reduce((total, item) => {
       return total + item.hrs;
     }, 0);
+    
+
     const avg = total / years;
+    const verticalMidPoint = (y + height)/2;
+
     const diffs = data.map((item) => {
       return item.hrs - avg;
     });
-    const maxDiff = maxDiffer(diffs);
-    const yIntervals = maxYRange/maxDiff;
     
+
+    const maxDiff = maxDiffer(diffs);
+  
+
+    const yIntervals = verticalMidPoint/maxDiff;
+    const xInterval = (width/years);
+    for (const i in diffs){
+      if (diffs[i] < 0){
+        addRect({
+        "x" :  (xInterval * i ) + padding,
+        "y" :verticalMidPoint, 
+        "width": xInterval - padding,
+        "height": Math.abs(diffs[i]*yIntervals) , 
+        }, "#C8102E","#ffffff");
+      } else if (diffs[i]>0){
+          addRect({
+            "x" :  (xInterval * i) + padding,
+          "y" :verticalMidPoint - diffs[i]*yIntervals , 
+          "width": xInterval - padding,
+          "height": diffs[i]*yIntervals , 
+          },"#4A777A","#ffffff");
+      }
+      addLine({
+        x1: x,
+        y1: verticalMidPoint,
+        x2: width,
+        y2: verticalMidPoint
+      },"#ffffff")
+    }
   });
 }
