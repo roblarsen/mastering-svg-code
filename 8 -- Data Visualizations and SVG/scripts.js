@@ -122,6 +122,7 @@ function viz() {
       return item.hrs - avg;
     });
     const maxDiff = maxDiffer(diffs);
+    console.log(maxDiff)
     const yIntervals = verticalMidPoint / maxDiff;
     const xInterval = (vizWidth / years);
     for (const i in diffs) {
