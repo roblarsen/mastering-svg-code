@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-12">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 450" width="1000" height="450" version="1.1" id="canvas" class="canvas">
-          <circle cx="500" cy="225" r="50" fill="blue" id="circle"></circle>
+          <circle cx="75" cy="225" r="50" fill="blue" id="circle"></circle>
         </svg>
       </div>
     </div>
@@ -25,21 +25,33 @@
 <script>
 
 document.addEventListener("DOMContentLoaded",()=>{
-  let start = null;
-  const ccircle = document.getElementById('canvas');
 
-/*
-function step(timestamp) {
-  if (!start) start = timestamp;
-  var progress = timestamp - start;
-  element.style.left = Math.min(progress / 10, 200) + 'px';
-  if (progress < 2000) {
-    window.requestAnimationFrame(step);
+  const doc = document;
+  const canvas = doc.getElementById("canvas");
+  const circle = doc.getElementById('circle');
+  const viewBox = canvas.viewBox.baseVal;
+  const width = viewBox.width;
+  const height = viewBox.height;
+  const x = viewBox.x;
+  const padding = width / 200;
+  const seconds = 3;
+  const fps = 60;
+  let currX = circle.cx.baseVal.value;
+  let newX = width - (circle.r.baseVal.value * 3);
+  let diffX = (currX >= newX) ? currX - newX : newX - currX;
+  let intervalX = diffX/(fps * seconds);
+  let animX = currX;
+  function animate(){
+
+    if (animX < newX){
+      animX = animX + intervalX;
+      circle.setAttribute("cx",animX)
+      window.requestAnimationFrame(animate);
   }
 }
-
-window.requestAnimationFrame(step);
-})*/
+animate()
+}
+);
 </script>
 
 </body>
