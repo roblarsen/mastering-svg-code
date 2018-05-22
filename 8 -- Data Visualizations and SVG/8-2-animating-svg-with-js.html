@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-  
+
 </head>
 
 <body>
@@ -22,37 +22,37 @@
     </div>
   </div>
 
-<script>
+  <script>
 
-document.addEventListener("DOMContentLoaded",()=>{
+    document.addEventListener("DOMContentLoaded", () => {
 
-  const doc = document;
-  const canvas = doc.getElementById("canvas");
-  const circle = doc.getElementById('circle');
-  const viewBox = canvas.viewBox.baseVal;
-  const width = viewBox.width;
-  const height = viewBox.height;
-  const x = viewBox.x;
-  const padding = width / 200;
-  const seconds = 3;
-  const fps = 60;
-  let currX = circle.cx.baseVal.value;
-  let newX = width - (circle.r.baseVal.value * 3);
-  let diffX = (currX >= newX) ? currX - newX : newX - currX;
-  let intervalX = diffX/(fps * seconds);
-  let animX = currX;
-  function animate(){
+      const doc = document;
+      const canvas = doc.getElementById("canvas");
+      const circle = doc.getElementById('circle');
+      const viewBox = canvas.viewBox.baseVal;
+      const width = viewBox.width;
+      const height = viewBox.height;
+      const x = viewBox.x;
+      const padding = width / 200;
+      const seconds = 3;
+      const fps = 60;
+      let currX = circle.cx.baseVal.value;
+      let newX = width - (circle.r.baseVal.value * 3);
+      let diffX = newX - currX;
+      let intervalX = diffX / (fps * seconds);
+      let animX = currX;
+      function animate() {
 
-    if (animX < newX){
-      animX = animX + intervalX;
-      circle.setAttribute("cx",animX)
-      window.requestAnimationFrame(animate);
-  }
-}
-animate()
-}
-);
-</script>
+        if (animX < newX) {
+          animX = animX + intervalX;
+          circle.setAttribute("cx", animX)
+          window.requestAnimationFrame(animate);
+        }
+      }
+      animate()
+    }
+    );
+  </script>
 
 </body>
 
