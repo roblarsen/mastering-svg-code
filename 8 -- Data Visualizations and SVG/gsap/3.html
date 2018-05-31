@@ -4,7 +4,11 @@
 <head>
   <meta charset="utf-8">
   <title>Mastering SVG- SVG Animation with GSAP</title>
-
+<style type="text/css">
+.stroke {
+  visibility: hidden;
+}
+</style>
 </head>
 
 <body>
@@ -26,22 +30,21 @@
   </div>
 
 <script src="node_modules/gsap/src/minified/TweenMax.min.js"></script>
+<script src="node_modules/gsap/src/minified/TimelineMax.min.js"></script>
+
 <script>
-/*
-https://codepen.io/GreenSock/pen/jEEoyw/
-TweenLite.set(".gray-line, .green-line, .green-line-thin, .plugin-stroke", {visibility:"visible"});
 
-var tl = new TimelineLite({onUpdate:updateSlider}),
-    $slider = $("#slider");
+//https://codepen.io/GreenSock/pen/jEEoyw/
+TweenMax.set(".stroke", {visibility:"visible"});
 
-tl.from(".plugin-stroke", 4, {drawSVG:0, ease:Power1.easeInOut})
-  .fromTo(".gray-line, .green-line, .green-line-thin", 3, {drawSVG:0}, {drawSVG:"102%"}, "-=1")
-  .to("#Plugin, #ByGreenSock, #logo", 1, {autoAlpha:1, ease:Linear.easeNone})
-  .set("#lines", {visibility:"hidden"});
+var tl = new TimelineMax();
+
+tl.from(".stroke", 4, {drawSVG:0, ease:Power1.easeInOut})
+  .fromTo(".stroke", 3, {drawSVG:0}, {drawSVG:"102%"}, "-=1")
 
 
-TweenLite.render();
-*/
+TweenMax.render();
+
 </script>
 </body>
 
