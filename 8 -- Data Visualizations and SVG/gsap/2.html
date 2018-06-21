@@ -27,7 +27,7 @@ const circle = doc.getElementById('circle');
 const viewBox = canvas.viewBox.baseVal;
 const width = viewBox.width;
 const height= viewBox.height;
-TweenMax.to("#circle", 1, {attr:{cx:width,cy:0,r:height,fill:"red"}, ease:Linear.easeNone});
+TweenMax.to("#circle", 1, {attr:{cx:width,cy:0,r:height,fill:"red"}, ease:Linear.easeNone}).duration(5);
 </script>
 </body>
 
