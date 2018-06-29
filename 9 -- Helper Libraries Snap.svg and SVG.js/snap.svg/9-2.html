@@ -31,7 +31,7 @@
     const S = new Snap(circle);
 
     S.animate({ "cx": newX }, 3000, mina.bounce, () => {
-      S.animate({ "fill": "red" },1000)
+      S.attr({ "fill": "red" })
     });
   </script>
 </body>
