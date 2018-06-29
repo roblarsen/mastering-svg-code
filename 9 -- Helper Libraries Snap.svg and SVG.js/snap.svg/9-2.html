@@ -30,8 +30,8 @@
     const newX = width - (circle.r.baseVal.value * 3);
     const S = new Snap(circle);
 
-    S.animate({ "cx": newX }, 3000, () => {
-      S.attr({ "fill": "red" })
+    S.animate({ "cx": newX }, 3000, mina.bounce, () => {
+      S.animate({ "fill": "red" },1000)
     });
   </script>
 </body>
