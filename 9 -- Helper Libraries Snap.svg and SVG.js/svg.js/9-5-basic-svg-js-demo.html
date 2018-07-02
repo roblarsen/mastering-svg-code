@@ -18,13 +18,11 @@
   </div>
 
 
-  <script src="node_modules/snapsvg/dist/snap.svg-min.js"></script>
+  <script src="node_modules/svg.js/dist/svg.min.js"></script>
   <script>
-    const target = document.getElementById("target")
-    const S = new Snap(800,600);
-    S.appendTo(target)
-    S.circle(250,250,100).attr({"fill":"blue","stroke":"green"});
-    S.rect(550,250,100,100).attr({"fill":"green","stroke":"blue"});
+    const draw = SVG('target').size(800,600)
+    draw.circle(200).attr({"fill":"blue","stroke":"green", "x":250,"y":250,});
+    draw.rect(100,100).attr({"fill":"green","stroke":"blue", "x":550,"y":250});
   </script>
 </body>
 

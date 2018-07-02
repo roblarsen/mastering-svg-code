@@ -11,28 +11,28 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 450" width="1000" height="450" version="1.1" id="canvas" class="canvas">
-          <circle cx="75" cy="225" r="50" fill="blue" id="circle"></circle>
-        </svg>
+      <div class="col-12" id="canvas">
+
       </div>
     </div>
   </div>
 
 
-  <script src="node_modules/snapsvg/dist/snap.svg-min.js"></script>
+  <script src="node_modules/svg.js/dist/svg.min.js"></script>
+  <script src="node_modules/svg.easing.js/dist/svg.easing.min.js"></script>
   <script>
-    const doc = document;
-    const canvas = doc.getElementById("canvas");
-    const circle = doc.getElementById("circle");
-    const viewBox = canvas.viewBox.baseVal;
-    const width = viewBox.width;
-    const newX = width - (circle.r.baseVal.value * 3);
-    const S = new Snap(circle);
-
-    S.animate({ "cx": newX }, 3000, mina.bounce, () => {
-      S.attr({ "fill": "red" })
-    });
+    const width = 1000;
+    const height = 450;
+    const radius = 50;
+    const cx = 75;
+    const cy = 225;
+    const draw = SVG('canvas').size(width,height)
+    const circle = draw.circle(radius * 2).attr({"fill":"blue","cx":cx,"cy":cy});
+    const newX = width - (radius * 3);
+    circle.animate(3000, SVG.easing.bounce,1000).center(newX,cy).after(function(situation) {
+      this.animate(100).attr({ fill: 'red' })
+    })
+    
   </script>
 </body>
 
