@@ -60,10 +60,9 @@ function viz() {
       "hrs": 38
     }
   ];
-
-  const doc = document;
-  const canvas = doc.getElementById("canvas");
-  const S = new Snap(canvas);
+  const width = 1000;
+  const height = 450;
+  const draw = SVG("target").size(width, height);
   function maxDiffer(arr) {
     let maxDiff = arr[1] - arr[0];
     for (let i = 0; i < arr.length; i++) {
@@ -76,7 +75,7 @@ function viz() {
     return maxDiff;
   }
   document.addEventListener("DOMContentLoaded", () => {
-    const viewBox = S.node.viewBox.baseVal;
+    const viewBox = draw.viewbox();
     const width = viewBox.width;
     const height = viewBox.height;
     const x = viewBox.x;
@@ -99,38 +98,58 @@ function viz() {
       const newX = xInterval * i;
       const newY = diffs[i] * yIntervals;
       if (diffs[i] < 0) {
-        S.rect(
-
-          newX + padding,
-          verticalMidPoint,
+        draw.rect(
           xInterval - padding,
           Math.abs(newY)
-        ).attr({ "fill": "#C8102E", "stroke": "#ffffff" });
+        )
+        .attr({
+          "x": newX + padding,
+          "y": verticalMidPoint,
+        })
+        .fill("#C8102E")
+        .stroke("#ffffff");
 
-        S.text(newX + padding, verticalMidPoint + Math.abs(newY) + (padding * 3), `${data[i].hrs} in ${data[i].year}`).attr({ "stroke": "#ffffff" })
+        draw.plain(`${data[i].hrs} in ${data[i].year}`)
+        .attr({
+          "x": newX + padding,
+          "y": verticalMidPoint + Math.abs(newY) + (padding * 3)
+        });
       }
       else if (diffs[i] > 0) {
-        S.rect(
-          newX + padding,
-          verticalMidPoint - newY,
+        draw.rect(
           xInterval - padding,
           newY,
-        ).attr({ "fill": "#4A777A", "stroke": "#ffffff" });
+        )
+        .attr({
+          "x": newX + padding,
+          "y": verticalMidPoint - newY
+        })
+        .fill("#4A777A")
+        .stroke("#ffffff");
 
-        S.text(newX + padding,
-          verticalMidPoint - newY - (padding * 2)
-          , `${data[i].hrs} in ${data[i].year}`).attr({ "stroke": "#ffffff" });
-      }
-      S.line(
-        x,
-        verticalMidPoint,
-        width,
-        verticalMidPoint
-      ).attr({ "stroke": "#ffffff" });
-      S.text(x + padding,
-        height - (padding * 3)
-        , `Based on an average of ${avg} home runs over ${years} years`, "large").addClass("large");;
+        draw.plain(`${data[i].hrs} in ${data[i].year}`)
+        .attr({
+          "x": newX + padding,
+          "y": verticalMidPoint - newY - (padding * 2)
+        })
+      }    
     }
+    draw.line(
+      x,
+      verticalMidPoint,
+      width,
+      verticalMidPoint
+    )
+    .attr({ 
+      "stroke": "#ffffff" 
+    });
+
+    draw.plain(`Based on an average of ${avg} home runs over ${years} years`)
+    .attr({
+      "x": x + padding,
+      "y": height - (padding * 3)
+    })
+    .addClass("large");
   })
 
 }

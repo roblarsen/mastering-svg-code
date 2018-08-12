@@ -29,9 +29,13 @@
     const draw = SVG('canvas').size(width,height)
     const circle = draw.circle(radius * 2).attr({"fill":"blue","cx":cx,"cy":cy});
     const newX = width - (radius * 3);
-    circle.animate(3000, SVG.easing.bounce,1000).center(newX,cy).after(function(situation) {
-      this.animate(100).attr({ fill: 'red' })
-    })
+    circle.animate(3000, SVG.easing.bounce,1000)
+      .center(newX,cy)
+      .after(function(situation) {
+        this.attr({ 
+          "fill": 'red' 
+        })
+      })
     
   </script>
 </body>

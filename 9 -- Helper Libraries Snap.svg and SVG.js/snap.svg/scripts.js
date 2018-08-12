@@ -107,7 +107,7 @@ function viz() {
           Math.abs(newY)
         ).attr({ "fill": "#C8102E", "stroke": "#ffffff" });
 
-        S.text(newX + padding, verticalMidPoint + Math.abs(newY) + (padding * 3), `${data[i].hrs} in ${data[i].year}`).attr({ "stroke": "#ffffff" })
+        S.text(newX + padding, verticalMidPoint + Math.abs(newY) + (padding * 3), `${data[i].hrs} in ${data[i].year}`)
       }
       else if (diffs[i] > 0) {
         S.rect(
@@ -119,7 +119,7 @@ function viz() {
 
         S.text(newX + padding,
           verticalMidPoint - newY - (padding * 2)
-          , `${data[i].hrs} in ${data[i].year}`).attr({ "stroke": "#ffffff" });
+          , `${data[i].hrs} in ${data[i].year}`);
       }
       S.line(
         x,
@@ -129,7 +129,7 @@ function viz() {
       ).attr({ "stroke": "#ffffff" });
       S.text(x + padding,
         height - (padding * 3)
-        , `Based on an average of ${avg} home runs over ${years} years`, "large").addClass("large");;
+        , `Based on an average of ${avg} home runs over ${years} years`).addClass("large");
     }
   })
 
