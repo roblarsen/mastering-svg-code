@@ -12,7 +12,6 @@
     "d3": "^5.5.0"
   },
   "devDependencies": {
-    "d3-chord": "^1.0.4",
     "d3-fetch": "^1.1.0"
   }
 }
