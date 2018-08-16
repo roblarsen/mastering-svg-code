@@ -24,8 +24,8 @@
     
     <script>
 
-        let width = 960,
-            height = 500,
+        let width = 1000,
+            height = 1000,
             radius = Math.min(width, height) / 2;
 
         let color = d3.scaleOrdinal()
@@ -45,11 +45,11 @@
 
         let arc = d3.arc()
             .outerRadius(radius - 10)
-            .innerRadius(radius - 70);
+            .innerRadius(radius - 200);
 
         let pie = d3.pie()
             .sort(null)
-            .value(function (d) { return d.population; });
+            .value(function (d) { return d.occurances; });
 
         let svg = d3.select("#target").append("svg")
             .attr("width", width)
@@ -65,19 +65,15 @@
 
             g.append("path")
                 .attr("d", arc)
-                .style("fill", function (d) { return color(d.data.age); });
+                .style("fill", function (d) { return color(d.data.title); });
 
             g.append("text")
-                .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
-                .attr("dy", ".35em")
-                .text(function (d) { return d.data.age; });
+                .attr("transform", function (d) { 
+                    return "translate(" + arc.centroid(d) + ")"; })
+                .attr("dx", "-3em")
+                .text(function (d) { return d.data.title; });
         });
 
-
-        function type(d) {
-            d.population = +d.population;
-            return d;
-        }
 
     </script>
 
