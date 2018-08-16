@@ -85,7 +85,9 @@ function drawChord() {
         b = Math.cos(d.angle) * (outerRadius + 30);
       return "translate(" + a + "," + (-b) + ")";
     })
-    .text((d)=> { return names[d.index]; });
+    .text((d)=> {
+      return names[d.index];
+    });
 
   let groupTick = group.selectAll(".group-tick")
     .data((d)=> { return groupTicks(d, 1e3); })
