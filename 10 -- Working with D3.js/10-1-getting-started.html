@@ -13,18 +13,72 @@
     <div class="container">
         <div class="row">
             <div class="col-12" id="target">
-                <h1>Trip connections between the top 10 Hubway departure stations. Data from the
-                    <a href="http://hubwaydatachallenge.org/">Hubway Data Visualization Challenge</a>
-                </h1>
 
-                <svg width="1000" height="1000"></svg>
             </div>
         </div>
     </div>
 
 
     <script src="node_modules/d3/dist/d3.min.js"></script>
+    <script src="node_modules/d3-fetch/dist/d3-fetch.min.js"></script>
+    
     <script>
+
+        let width = 960,
+            height = 500,
+            radius = Math.min(width, height) / 2;
+
+        let color = d3.scaleOrdinal()
+            .domain(d3.range(9))
+            .range([
+                "002244",
+                "183858",
+                "304F6D",
+                "496582",
+                "617C97",
+                "7992AB",
+                "92A9C0",
+                "AABFD5",
+                "C2D6EA",
+                "DBEDFF"
+            ]);
+
+        let arc = d3.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(radius - 70);
+
+        let pie = d3.pie()
+            .sort(null)
+            .value(function (d) { return d.population; });
+
+        let svg = d3.select("#target").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        d3.csv("data.csv").then((data)=> {
+            let g = svg.selectAll(".arc")
+                .data(pie(data))
+                .enter().append("g")
+                .attr("class", "arc");
+
+            g.append("path")
+                .attr("d", arc)
+                .style("fill", function (d) { return color(d.data.age); });
+
+            g.append("text")
+                .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+                .attr("dy", ".35em")
+                .text(function (d) { return d.data.age; });
+        });
+
+
+        function type(d) {
+            d.population = +d.population;
+            return d;
+        }
+
     </script>
 
 </body>
