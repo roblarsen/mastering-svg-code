@@ -36,20 +36,20 @@ let svg = d3.select("#target").append("svg")
   .append("g")
   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-d3.csv("data.csv").then((data) => {
+d3.csv("data/top-fifty-comics-data.csv").then((data) => {
   let g = svg.selectAll(".arc")
     .data(pie(data))
     .enter()
-    .append("g")
+    .append("g");
 
   g.append("path")
     .attr("d", arc)
-    .style("fill", (d) => { 
-      return color(d.data.title); 
+    .style("fill", (d) => {
+      return color(d.data.title);
     })
     .filter((d) => {
       return d.endAngle - d.startAngle < .2;
-    })
+    });
 
   svg.selectAll(".arc")
     .data(pie(data)).enter()
@@ -61,9 +61,9 @@ d3.csv("data.csv").then((data) => {
     })
     .attr("dy", function (d) {
       if (d.startAngle > 6.0 && d.startAngle < 6.1) {
-        return "-.6em"
+        return "-.6em";
       } else if (d.startAngle > 6.1) {
-        return "-1.5em"
+        return "-1.5em";
       }
     })
     .text(function (d) { return d.data.title; })
