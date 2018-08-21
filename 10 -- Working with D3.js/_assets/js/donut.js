@@ -3,7 +3,7 @@ const width = 1000,
   height = 1000,
   radius = Math.min(width, height) / 2;
 
-let color = d3.scaleOrdinal()
+const color = d3.scaleOrdinal()
   .domain(d3.range(13))
   .range([
     "#1fb003",
@@ -21,11 +21,11 @@ let color = d3.scaleOrdinal()
     "#000EBF"
   ]);
 
-let arc = d3.arc()
+const arc = d3.arc()
   .outerRadius(radius - 10)
   .innerRadius(radius - 200);
 
-let pie = d3.pie()
+const pie = d3.pie()
   .value((d) => {
     return d.numbers;
   });
@@ -36,10 +36,9 @@ let svg = d3.select("#target").append("svg")
   .append("g")
   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-  svg.append("text")
-      .text("Distrobution of comic book titles in top 50 sales of all time.")
-      .style("text-anchor","middle")
-      .attr("class","legend");
+svg.append("text")
+  .text("Distribution of comic book titles in top 50 sales of all time.")
+  .attr("class","legend");
 
 d3.csv("data/top-fifty-comics-data.csv").then((data) => {
   let g = svg.selectAll(".arc")
@@ -50,7 +49,7 @@ d3.csv("data/top-fifty-comics-data.csv").then((data) => {
   g.append("path")
     .attr("d", arc)
     .style("fill", (d) => {
-      return color(d.data.title);
+      return color(d.index);
     })
     .filter((d) => {
       return d.endAngle - d.startAngle < .2;
