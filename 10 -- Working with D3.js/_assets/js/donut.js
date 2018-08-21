@@ -1,5 +1,5 @@
 
-let width = 1000,
+const width = 1000,
   height = 1000,
   radius = Math.min(width, height) / 2;
 
@@ -35,6 +35,11 @@ let svg = d3.select("#target").append("svg")
   .attr("height", height)
   .append("g")
   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  svg.append("text")
+      .text("Distrobution of comic book titles in top 50 sales of all time.")
+      .style("text-anchor","middle")
+      .attr("class","legend");
 
 d3.csv("data/top-fifty-comics-data.csv").then((data) => {
   let g = svg.selectAll(".arc")
