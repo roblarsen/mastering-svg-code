@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Mastering SVG- D3 Enter</title>
+  <title>Mastering SVG- D3 Enter with exiting content</title>
 </head>
 
 <body>
@@ -20,15 +20,17 @@
   <script>
     function enter() {
       const data = ["a", "b", "c", "d", "e"];
-      let div = d3.select("#target")
-      div.selectAll("p")
+      d3.select("#target")
+        .selectAll("p")
         .data(data)
-        .enter().append("p")
-        .text(function (d) { return d; })
+        .text((d) => d)
+        .enter()
+        .append("p")
+        .text((d) => d);
     }
     enter();
 
-  </script>>
+  </script>
 </body>
 
 </html>

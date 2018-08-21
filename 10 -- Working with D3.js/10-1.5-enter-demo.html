@@ -17,22 +17,18 @@
   <script src="node_modules/d3/dist/d3.min.js"></script>
   <script src="node_modules/d3-fetch/dist/d3-fetch.min.js"></script>
   <script>
+    function enter() {
       const data = ["a", "b", "c", "d", "e"];
-      function select(){
-        console.log(data);
-        let selection = d3.select("#target").selectAll("p")
+      console.log(d3.select("#target")
+        .selectAll("p")
         .data(data)
-        .enter()
-        .append("p")
-        .text(function (d) { return d; })
-      
-      console.log(selection.exit());
-      d3.select("#target").selectAll("p").data(data).exit().remove()
-      
-      }
-    setTimeout(()=>{data.pop();console.log(data);select()},1000);      
-        
-    select();
+        .enter());d3.select("#target")
+        .selectAll("p")
+        .data(data)
+        .enter().append("p")
+        .text((d) => {console.log(d); return d});
+    }
+    enter();
 
   </script>
 </body>
