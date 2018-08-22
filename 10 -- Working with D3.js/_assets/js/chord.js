@@ -24,13 +24,10 @@ function drawChord() {
     "Newbury St / Hereford S"
   ];
   
-  let svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height"),
+  const width = 1000,
+    height = 1000,
     outerRadius = Math.min(width, height) * 0.5 - 40,
     innerRadius = outerRadius - 30;
-
-  let formatValue = d3.formatPrefix(",.0", 1e3);
 
   let chord = d3.chord()
     .padAngle(0.05)
@@ -54,6 +51,10 @@ function drawChord() {
       "C2D6EA",
       "DBEDFF"
     ]);
+  let svg = d3.select("#target")
+    .append("svg")
+    .attr("height", height)
+    .attr("width",width);
   let g = svg.append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
     .datum(chord(matrix));
@@ -119,7 +120,6 @@ function drawChord() {
         return null;
       }
     })
-    .text((d)=> formatValue(d.value));
 
   g.append("g")
     .attr("class", "ribbons")
