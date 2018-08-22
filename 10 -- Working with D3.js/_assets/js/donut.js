@@ -51,31 +51,24 @@ d3.csv("data/top-fifty-comics-data.csv").then((data) => {
     .style("fill", (d) => {
       return color(d.index);
     })
-    .filter((d) => {
-      return d.endAngle - d.startAngle < .2;
-    });
 
-  svg.selectAll(".arc")
-    .data(pie(data)).enter()
-    .append("g")
-    .attr("class", "text")
-    .append("text")
-    .attr("transform", function (d) {
-      return "translate(" + arc.centroid(d) + ")";
-    })
-    .attr("dy", function (d) {
-      if (d.startAngle > 6.0 && d.startAngle < 6.1) {
-        return "-.6em";
-      } else if (d.startAngle > 6.1) {
-        return "-1.5em";
-      }
-    })
-    .text(function (d) { return d.data.title; })
-    .attr("text-anchor", "middle")
-    .style("fill", "#fff")
-    .filter(function (d) {
-      return d.endAngle - d.startAngle < .2;
-    })
-    .attr("class", "small-slice");
+    svg.selectAll(".label")
+      .data(pie(data))
+      .enter()
+      .append("text")
+      .attr("class", "text")
+      .attr("transform", (d) => {
+        return "translate(" + arc.centroid(d) + ")";
+      })
+      .attr("dy", (d) => {
+        if (d.startAngle > 6.0 && d.startAngle < 6.1) {
+          return "-.6em";
+        } else if (d.startAngle > 6.1) {
+          return "-1.5em";
+        }
+      })
+      .text((d) => {
+          return d.data.title;
+      });
 
 });
