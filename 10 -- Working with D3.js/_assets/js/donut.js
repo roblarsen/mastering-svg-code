@@ -61,9 +61,9 @@ d3.csv("data/top-fifty-comics-data.csv").then((data) => {
         return "translate(" + arc.centroid(d) + ")";
       })
       .attr("dy", (d) => {
-        if (d.startAngle > 6.0 && d.startAngle < 6.1) {
+        if (d.startAngle > 6.0 && d.startAngle < 6.125) {
           return "-.6em";
-        } else if (d.startAngle > 6.1) {
+        } else if (d.startAngle > 6.125) {
           return "-1.5em";
         }
       })
