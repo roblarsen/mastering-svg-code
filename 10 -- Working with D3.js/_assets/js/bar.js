@@ -1,18 +1,18 @@
 function bar() {
-  const width = 960, 
-        height = 800, 
-        chartHeight = 600, 
-        margin = {
-          top: 20,
-          right: 20,
-          bottom: 30,
-          left: 55
-        };
+  const width = 960,
+    height = 800,
+    chartHeight = 600,
+    margin = {
+      top: 20,
+      right: 20,
+      bottom: 30,
+      left: 55
+    };
   let svg = d3.select("#target").append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", `translate(${margin.left},${margin.top})`);
   let x = d3.scaleBand()
     .range([10, (width - margin.left - margin.right)])
     .paddingInner(0.1);
@@ -44,7 +44,7 @@ function bar() {
     })]);
     svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + chartHeight + ")")
+      .attr("transform", `translate(0, ${chartHeight})`)
       .call(xAxis)
       .selectAll("text")
       .style("text-anchor", "end")
@@ -61,15 +61,15 @@ function bar() {
         return color(d.price);
       })
       .attr("x", (d) => {
-         return x(d.title); })
+        return x(d.title); })
       .attr("width", () => {
         return x.bandwidth();
       })
       .attr("y", (d) => {
-         return y(d.price);
+        return y(d.price);
       })
       .attr("height", (d) => {
-         return chartHeight - y(d.price);
+        return chartHeight - y(d.price);
       });
   });
 }

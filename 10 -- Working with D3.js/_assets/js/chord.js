@@ -23,118 +23,130 @@ function drawChord() {
     "Lewis Wharf",
     "Newbury St / Hereford S"
   ];
-  
-  const width = 1000,
-    height = 1000,
-    outerRadius = Math.min(width, height) * 0.5 - 40,
-    innerRadius = outerRadius - 30;
 
-  let chord = d3.chord()
-    .padAngle(0.05)
+  const width = 1200,
+    height = 1200,
+    radius = Math.min(width, height) / 2,
+    padding = 200,
+    outerRadius = radius - padding,
+    innerRadius = outerRadius - 25;
+
+  const chord = d3.chord()
+    .padAngle(0.025)
     .sortSubgroups(d3.descending);
-  let arc = d3.arc()
+
+  const arc = d3.arc()
     .innerRadius(innerRadius)
     .outerRadius(outerRadius);
-  let ribbon = d3.ribbon()
+
+  const ribbon = d3.ribbon()
     .radius(innerRadius);
-  let color = d3.scaleOrdinal()
+
+  const color = d3.scaleOrdinal()
     .domain(d3.range(9))
     .range([
-      "002244",
-      "183858",
-      "304F6D",
-      "496582",
-      "617C97",
-      "7992AB",
-      "92A9C0",
-      "AABFD5",
-      "C2D6EA",
-      "DBEDFF"
+      "#e6194b",
+      "#ffe119",
+      "#0082c8",
+      "#f58231",
+      "#911eb4",
+      "#46f0f0",
+      "#f032e6",
+      "#d2f53c",
+      "#808000",
+      "#008080"
     ]);
-  let svg = d3.select("#target")
+
+
+  const svg = d3.select("#target")
     .append("svg")
     .attr("height", height)
-    .attr("width",width);
-  let g = svg.append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+    .attr("width", width);
+
+  const g = svg.append("g")
+    .attr("transform", `translate(${width / 2},${height / 2})`)
     .datum(chord(matrix));
-  let group = g.append("g")
+
+  const group = g.append("g")
     .attr("class", "groups")
     .selectAll("g")
-    .data((chords) => chords.groups )
-    .enter().append("g");
+    .data((chords) => chords.groups)
+    .enter()
+    .append("g");
 
   group.append("path")
-    .style("fill", (d)=> color(d.index))
-    .style("stroke", (d)=> d3.rgb(color(d.index)).darker())
+    .style("fill", (d) => color(d.index))
+    .style("stroke", (d) => d3.color(color(d.index)).darker())
     .attr("d", arc)
     .on("mouseover", fade(.1))
     .on("mouseout", fade(1));
-
+  
+  g.append("g")
+    .attr("class", "ribbons")
+    .selectAll("path")
+    .data((chords) => chords)
+    .enter()
+    .append("path")
+    .attr("d", ribbon)
+    .style("fill", (d)=> color(d.source.index))
+    .style("stroke", (d) => d3.color(color(d.source.index)).darker());
+  
   group.append("text")
-    .each((d)=> d.angle = (d.startAngle + d.endAngle) / 2 )
+    .each((d) => d.angle = (d.startAngle + d.endAngle) / 2)
     .attr("dy", ".35em")
-    .attr("text-anchor", (d)=> {
+    .attr("text-anchor", (d) => {
       if (d.angle > Math.PI) {
         return "end";
       } else {
         return null;
       }
     })
-    .attr("transform", (d)=> {
-      var a = Math.sin(d.angle) * (outerRadius + 10),
+    .attr("transform", (d) => {
+      const a = Math.sin(d.angle) * (outerRadius + 10),
         b = Math.cos(d.angle) * (outerRadius + 30);
-      return "translate(" + a + "," + (-b) + ")";
+      return `translate(${a},${(-b)})`;
     })
     .text((d)=> {
       return names[d.index];
     });
 
-  let groupTick = group.selectAll(".group-tick")
-    .data((d)=> { return groupTicks(d, 1e3); })
-    .enter().append("g")
+  const groupTick = group.selectAll(".group-tick")
+    .data((d) => groupTicks(d, 1000))
+    .enter()
+    .append("g")
     .attr("class", "group-tick")
-    .attr("transform", (d)=> {
-      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + outerRadius + ",0)";
+    .attr("transform", (d) => {
+      return `rotate(${(d.angle * 180 / Math.PI - 90)}) translate(${outerRadius},0)`;
     });
 
   groupTick.append("line")
     .attr("x2", 6);
 
   groupTick
-    .filter((d)=> { return d.value % 5e3 === 0; })
+    .filter((d) => d.value && !(d.value % 5000))
     .append("text")
     .attr("x", 8)
     .attr("dy", ".35em")
-    .attr("transform", (d)=> {
+    .attr("transform", (d) => {
       if (d.angle > Math.PI) {
         return "rotate(180) translate(-16)";
       } else {
         return null;
       }
     })
-    .style("text-anchor", (d)=> {
+    .style("text-anchor", (d) => {
       if (d.angle > Math.PI) {
         return "end";
       } else {
         return null;
       }
     })
+    .attr("class", "tick")
+    .text((d) => d3.formatPrefix(",.0", 1000)(d.value));
 
-  g.append("g")
-    .attr("class", "ribbons")
-    .selectAll("path")
-    .data(function (chords) { return chords; })
-    .enter().append("path")
-    .attr("d", ribbon)
-    .style("fill", (d)=> color(d.target.index))
-    .style("stroke", (d)=> d3.rgb(color(d.index)).darker())
-
-
-  // Returns an array of tick angles and values for a given group and step.
   function groupTicks(d, step) {
     let k = (d.endAngle - d.startAngle) / d.value;
-    return d3.range(0, d.value, step).map((value)=> {
+    return d3.range(0, d.value, step).map((value) => {
       return {
         value: value,
         angle: value * k + d.startAngle
