@@ -93,18 +93,15 @@ function drawChord() {
   
   group.append("text")
     .each((d) => d.angle = (d.startAngle + d.endAngle) / 2)
-    .attr("dy", ".35em")
     .attr("text-anchor", (d) => {
       if (d.angle > Math.PI) {
         return "end";
-      } else {
-        return null;
       }
     })
     .attr("transform", (d) => {
-      const a = Math.sin(d.angle) * (outerRadius + 10),
-        b = Math.cos(d.angle) * (outerRadius + 30);
-      return `translate(${a},${(-b)})`;
+      const y = Math.sin(d.angle) * (outerRadius + 10),
+        x = Math.cos(d.angle) * (outerRadius + 20);
+      return `translate(${y},${(-x)})`;
     })
     .text((d)=> {
       return names[d.index];
@@ -130,26 +127,22 @@ function drawChord() {
     .attr("transform", (d) => {
       if (d.angle > Math.PI) {
         return "rotate(180) translate(-16)";
-      } else {
-        return null;
       }
     })
     .style("text-anchor", (d) => {
       if (d.angle > Math.PI) {
         return "end";
-      } else {
-        return null;
       }
     })
     .attr("class", "tick")
     .text((d) => d3.formatPrefix(",.0", 1000)(d.value));
 
   function groupTicks(d, step) {
-    let k = (d.endAngle - d.startAngle) / d.value;
+    let increment = (d.endAngle - d.startAngle) / d.value;
     return d3.range(0, d.value, step).map((value) => {
       return {
         value: value,
-        angle: value * k + d.startAngle
+        angle: value * increment + d.startAngle
       };
     });
   }
