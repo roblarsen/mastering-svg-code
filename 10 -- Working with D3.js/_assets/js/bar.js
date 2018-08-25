@@ -2,19 +2,15 @@ function bar() {
   const width = 960,
     height = 800,
     chartHeight = 600,
-    margin = {
-      top: 20,
-      right: 20,
-      bottom: 30,
-      left: 55
-    };
+    margin = 30;
+
   let svg = d3.select("#target").append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    .attr("transform", `translate(${margin},${margin})`);
   let x = d3.scaleBand()
-    .range([10, (width - margin.left - margin.right)])
+    .range([10, (width - (margin * 2))])
     .paddingInner(0.1);
   let y = d3.scaleLinear()
     .range([chartHeight, 0]);
