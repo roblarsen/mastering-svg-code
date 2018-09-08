@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Mastering SVG- D3 Enter with exiting content</title>
+  <title>Mastering SVG- D3 Enter with existing content</title>
 </head>
 
 <body>
@@ -23,7 +23,6 @@
       d3.select("#target")
         .selectAll("p")
         .data(data)
-        .text((d) => d)
         .enter()
         .append("p")
         .text((d) => d);

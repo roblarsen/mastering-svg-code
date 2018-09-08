@@ -22,11 +22,7 @@
       console.log(d3.select("#target")
         .selectAll("p")
         .data(data)
-        .enter());d3.select("#target")
-        .selectAll("p")
-        .data(data)
-        .enter().append("p")
-        .text((d) => {console.log(d); return d});
+        .enter());
     }
     enter();
 
