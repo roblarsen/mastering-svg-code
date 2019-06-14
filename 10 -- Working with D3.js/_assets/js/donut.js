@@ -37,7 +37,7 @@ let svg = d3.select("#target").append("svg")
   .attr("transform", `translate(${width / 2},${height / 2})`);
 
 svg.append("text")
-  .text("Distribution of comic book titles in top 50 sales of all time.")
+  .text("Record holders.")
   .attr("class","legend");
 
 d3.csv("data/top-fifty-comics-data.csv").then((data) => {
